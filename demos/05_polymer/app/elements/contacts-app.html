@@ -1,0 +1,42 @@
+<link rel="import" href="../../common/polymer/polymer.html">
+<link rel="import" href="contact-card.html">
+
+<dom-module id="contacts-app">
+
+  <template>
+    <style>
+      .card {
+        width: 200px;
+        overflow: hidden;
+        border: 4px double;
+        float: left;
+        margin-right: 10px;
+      }
+      contact-picture, contact-info {
+        display: block;
+      }
+    </style>
+    <template is="dom-repeat" id="menu" items="{{contacts}}">
+      <contact-card name="{{item.first}} {{item.last}}" email="{{item.email}}" avatar="{{item.avatar}}"></contact-picture>
+    </template>
+  </template>
+
+  <script>
+    class ContactsApp extends Polymer.Element {
+
+      static get is() { return 'contacts-app' }
+
+      static get properties() {
+        return {
+          contacts: {
+            type: Array
+          }
+        };
+      }
+
+    }
+    customElements.define(ContactsApp.is, ContactsApp);
+
+  </script>
+
+</dom-module>

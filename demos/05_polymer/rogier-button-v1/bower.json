@@ -1,0 +1,7 @@
+{
+  "name": "rogier-button-demo",
+  "dependencies": {
+    "polymer": "Polymer/polymer#1.2.0"
+  },
+  "devDependencies": {}
+}

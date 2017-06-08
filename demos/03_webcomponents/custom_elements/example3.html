@@ -13,34 +13,30 @@
 	</style>
 </head>
 <body>
-	<rogier-quote>Lorem Ipsum</rogier-quote>
 	<script>
 		// define new prototype based on HTMLElement
 		var RogierQuotePrototype = Object.create(HTMLElement.prototype);
 
 		// define a property on this prototype
 		Object.defineProperty(RogierQuotePrototype, 'hasQuotes', {
-			value: true,
-			writable : true
+		  value: true,
+		  writable: true
 		});
 
 		// define function on this prototype
 		RogierQuotePrototype.setText = function(txt) {
-			this.innerHTML = this.hasQuotes ? '“' + txt + '”' : txt;
+		  this.innerHTML = this.hasQuotes ? '“' + txt + '”' : txt;
 		}
 
-		// callback function overload
-		RogierQuotePrototype.createdCallback = function() {
-			console.log('Rogier quote created');
-		};
-
 		// register element with this prototype
-		var RogierQuoteElement = document.registerElement('rogier-quote', {prototype: RogierQuotePrototype});
+		var RogierQuoteElement = document.registerElement('rogier-quote', {
+		  prototype: RogierQuotePrototype
+		});
 
 		// create new quote
 		var newRogierQuote = new RogierQuoteElement();
-		newRogierQuote.hasQuotes = true;
-		newRogierQuote.setText('sid amet');
+		newRogierQuote.hasQuotes = false;
+		newRogierQuote.setText('wie laatst lacht, snapt de mop niet');
 		document.body.appendChild(newRogierQuote);
 	</script>
 </body>

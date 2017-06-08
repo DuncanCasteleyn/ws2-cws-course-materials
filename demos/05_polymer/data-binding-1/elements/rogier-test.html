@@ -1,0 +1,25 @@
+<link rel="import" href="../../common/polymer/polymer.html">
+
+<dom-module id="rogier-test">
+  <template>
+    <input id="input" value="{{inpvalue::input}}" type="text" />
+    <p>
+      value is <span>{{inpvalue}}</span>  
+    </p>
+  </template>
+   
+  <script>
+    class RogierTest extends Polymer.Element {
+
+      static get is() { return 'rogier-test' }
+
+      static get properties() {
+        return {
+            inpvalue: { type: String, value: "0" }
+        };
+      }
+
+    }
+    customElements.define(RogierTest.is, RogierTest);
+  </script>
+</dom-module>

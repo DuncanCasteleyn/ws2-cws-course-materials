@@ -1,0 +1,25 @@
+<link rel="import" href="../../common/polymer/polymer.html">
+
+<dom-module id="rogier-test">
+
+  <template>
+    <div id="div1">
+      <p><slot>default text</slot></p>
+    </div>
+  </template>
+  <script>
+    class RogierTest extends Polymer.Element {
+
+      static get is() { return 'rogier-test' }
+
+      ready() {
+        super.ready();
+        console.log('element ready');
+      }
+
+    }
+    customElements.define(RogierTest.is, RogierTest);
+
+  </script>
+
+</dom-module>

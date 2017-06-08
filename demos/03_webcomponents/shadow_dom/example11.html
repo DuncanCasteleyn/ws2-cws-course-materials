@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test</title>
+</head>
+<body>
+	<p id="p1">test1</p>
+	<div id="shadow-host"></div>
+	<script>
+		var shadowroot = document.querySelector('#shadow-host').createShadowRoot();
+		var p2 = document.createElement("P");
+		p2.id = 'p2';
+		p2.innerHTML = 'test2';
+		// this will work
+		p2.addEventListener('click', function() {
+			console.log('p with id ' + this.id + ' clicked')
+		});
+		shadowroot.appendChild(p2);
+	</script>
+</body>
+</html>

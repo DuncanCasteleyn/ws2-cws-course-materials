@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
    <meta charset="utf-8">
-   <title>Clientside Development &mdash; Intro</title>
+   <title>Frontend Development &mdash; Intro</title>
    <meta name="author" content="Rogier van der Linde - ikdoeict.be">
    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
    <link rel="stylesheet" href="library/reveal/css/reveal.min.css">
@@ -19,7 +19,7 @@
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
          <section>
-            <h1>INTRO CLIENTSIDE DEVELOPMENT</h1>
+            <h1>INTRO FRONTEND DEVELOPMENT</h1>
             <small>use the arrow keys to navigate; press space for slide overview<br /></small>
             <figure>
                <img src="img/00_intro/intro.png" alt="" width="100" />
@@ -206,7 +206,7 @@
                   <li class="no-style">
                      <ul>
                         <li class="arrow">
-                           summaries in <a href="https://github.com/mjoris/ws1-sws-course-materials">serverside webscripten 1 course materials (Git)</a>
+                           summaries in <a href="https://github.com/mjoris/ws1-sws-course-materials">backend scripting course materials (Git)</a>
                         </li>
                      </ul>
                   </li>
@@ -230,7 +230,7 @@
                   <li class="no-style">
                      <ul>
                         <li class="arrow">
-                           <a href="http://www.ikdoeict.be/leercentrum/index.html">clientside webscripten 1 course materials (ikdoeict.be)</a>
+                           <a href="http://www.ikdoeict.be/leercentrum/index.html">frontend development course materials (ikdoeict.be)</a>
                         </li>
                         <li class="arrow">
                            <a href="http://www.w3schools.com/jsref/">w3schools DOM reference</a>
@@ -317,8 +317,8 @@
                         <li>
                            code inspection
                            <ul>
-                              <li>DOM window</li>
-                              <li>styles windows (rules, properties, box model)</li>
+                              <li>DOM pane</li>
+                              <li>styles panes (rules, properties, box model)</li>
                               <li>live edit, copy, delete...</li>
                            </ul>
                         </li>
@@ -334,7 +334,7 @@
                         <li>
                            network
                            <ul>
-                              <li>requests &amp; responses inspection</li>
+                              <li>requests &amp; responses inspection (Postman plugin)</li>
                            </ul>
                         </li>
                         <li>
@@ -418,6 +418,20 @@
                      </ul>
                   </div>
                </div>
+               <div class="tooltip">
+                  <div>
+                     NodeJS
+                     <ul>
+                        <li>
+                           make sure Node's bin folder is in the path system variable (should be added automatically during installation)
+                           <ul>
+                              <li>on MAC: command "echo $PATH" -> should contain /usr/local/bin</li>
+                              <li>on PC: command "path" -> should contain C:\Program Files\nodejs\</li>
+                           </ul>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
             </section>
          </section>
 
@@ -430,24 +444,24 @@
                </ul>
             </section>
             <section>
-               <h2>Webscripting 2</h2>
+               <h2>Web development</h2>
                <ul>
                   <li>
-                     OPO: webscripting 2 [JPW361]
+                     OPO: Web Development [JPW361]
                   </li>
                   <li>
                      3 OLA's:
                      <ul>
-                        <li>web development theory (2 STP) [JLW505]</li>
-                        <li>lab serverside development (3 STP) [JLW506]</li>
-                        <li>lab clientside development (3 STP) [JLW507]</li>
+                        <li>Web development theory (2 STP) [JLW505]</li>
+                        <li>lab Backend development (3 STP) [JLW506]</li>
+                        <li>lab Frontend development (3 STP) [JLW507]</li>
                      </ul>
                   </li>
                   <li>
                      focus:
                      <ul>
-                        <li>webscripting 1: syntax and basic concepts</li>
-                        <li>webscripting 2: <em>development tools and frameworks</em></li>
+                        <li>webscripting: syntax and basic concepts</li>
+                        <li>web development: <em>development tools and frameworks</em></li>
                      </ul>
                   </li>
                </ul>
@@ -492,7 +506,7 @@
                </ul>
             </section>
             <section data-toc-title="">
-               <h2>Clientside Course topics (2)</h2>
+               <h2>Course topics (2)</h2>
                <ul>
                   <li>
                      Possible topics (cont'd)
@@ -521,7 +535,7 @@
                </ul>
             </section>
             <section data-toc-title="">
-               <h2>Clientside Course topics (3)</h2>
+               <h2>Course topics (3)</h2>
                <ul>
                   <li>
                      We'll focus on:
@@ -530,10 +544,10 @@
                            <em>devtools</em> (dep. managemant, task automation, preprocessing, code quality)
                         </li>
                         <li>
-                           <em>frameworks</em> (Bootstrap, Angular, MDL, Polymer...)
+                           <em>frameworks</em> (Bootstrap, MDL, Polymer, Angular...)
                         </li>
                         <li>
-                           <em>fun stuff</em> (last week)
+                           <em>language fundamentals</em> (ES6, BEM, CSS4, React?)
                         </li>
                      </ul>
                   </li>
@@ -585,14 +599,14 @@
                <h2>Timing &amp; Evaluation</h2>
                <ul>
                   <li>
-                     Week 1&ndash;6: OLA clientside (R. van der Linde)
+                     Week 1&ndash;6: OLA frontend (R. van der Linde)
                      <ul>
                         <li>6 lab sessions / 3h (permanent evaluation, 60%)</li>
                         <li>1 project (+oral defense, 40%) <span style="color:#900; font-style:italic">&rarr; you need at least 8/20 to get an OLA credit</span></li>
                      </ul>
                   </li>
                   <li>
-                     Week 7&ndash;12: OLA serverside (J. Maervoet &amp; K. Picalausa)
+                     Week 7&ndash;12: OLA backend (J. Maervoet &amp; K. Picalausa)
                      <ul>
                         <li>6 lab sessions / 3h (permanent evaluation, 60%)</li>
                         <li>1 project (+oral defense, 40%) <span style="color:#900; font-style:italic">&rarr; you need at least 8/20 to get an OLA credit</span></li>

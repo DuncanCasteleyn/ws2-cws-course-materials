@@ -150,7 +150,8 @@
               <div><pre class="bigger"><code class="language-html" contenteditable>&lt;!doctype html&gt;
 &lt;html&gt;
 &lt;body&gt;
-  &lt;!-- add two linked scripts --&gt;
+  &lt;!-- add some linked scripts --&gt;
+  &lt;script src="https://jspm.io/system@0.16.js"&gt;&lt;/script&gt;
   &lt;script src="https://google.github.io/traceur-compiler/bin/traceur.js"&gt;&lt;/script&gt;
   &lt;script src="https://google.github.io/traceur-compiler/src/bootstrap.js"&gt;&lt;/script&gt;
   &lt;!-- add type="module" to your ES2015 script --&gt;
@@ -164,6 +165,7 @@
   &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre></div>
+              <div class="demolink"><a href="demos/02_es2015/traceur.html">demo</a></div>
             </li>
             <li class="arrow">
               transpiling leads to poor performance; only use during development
@@ -405,7 +407,7 @@ console.log(obj.sum(6, 8));
             <li>
               aggregate remaining parameters into a single <code class="hl">...rest</code> parameter:
               <div><pre class="bigger"><code class="language-javascript strict overlayrun" contenteditable>var test = function(x, y, ...a) {
-    return (x + y) * a.length;
+  return (x + y) * a.length;
 }
 console.log(test(1, 2, "hello", true, 7)); </code></pre></div>
             </li>
@@ -486,9 +488,8 @@ console.log(c); </code></pre></div>
           <ul>
             <li>
               return multiple values:
-              <div><pre class="bigger"><code class="language-javascript strict overlayrun" contenteditable>var func = function()
-{
-    return [1, true, 'hello', {}]; // return multiple values
+              <div><pre class="bigger"><code class="language-javascript strict overlayrun" contenteditable>var func = function() {
+  return [1, true, 'hello', {}]; // return multiple values
 }
 
 var [a, , b, ] = func();
@@ -788,9 +789,9 @@ for (let i in obj) { // values
               Sidenote: when looping arrays or objects with <code>for...in</code>, you should use <code>hasOwnProperty()</code> to skip properties inherited from the prototype. Try this fragment:
               <div><pre class="bigger"><code class="language-javascript overlayrun wrong" contenteditable>// define prototype method
 Array.prototype.containsValue = function(obj) {
-    for (var key in this)
-        if (this[key] == obj) return true;
-    return false;
+  for (var key in this)
+    if (this[key] == obj) return true;
+  return false;
 }
 
 // create array and loop over properties
@@ -828,6 +829,11 @@ for (let value of x) {
               other methods are <code>clear()</code>, <code>forEach()</code>, <code>values()</code>
             </li>
           </ul>
+          <div class="tooltip">
+            <div>
+              Think of sets like a collection of values which have already been chosen. E.g. try building a hangman game with sets.
+            </div>
+          </div>
         </section>
         <section>
           <h2>Maps</h2>
@@ -859,7 +865,7 @@ for (let [key, value] of x) {
             <li>
               Same as Set and Map, but with some limitations:
               <ul>
-                <li>you can only use objects as keys</li>
+                <li>you can only add objects (weakset) or use objects as keys (weakmap)</li>
                 <li>you can't use iteration, so no <code>size</code>, <code>for...in</code> etc...</li>
               </ul>
             </li>
@@ -869,17 +875,23 @@ for (let [key, value] of x) {
 var weakset = new WeakSet();
 
 (function(){
-    var a = {x: 12};
-    var b = {y: 12};
+  var a = {x: 12};
+  var b = {y: 12};
 
-    set.add(a);
-    weakset.add(b);
+  set.add(a);
+  weakset.add(b);
 })(); // a and b only exist within function
 
 console.log(set); // map will contain a until you remove it manually
-console.log(weakset); // weakmap will contain b until garbage collected</code></pre></div>
+console.log(weakset); // weakmap will contain b until garbage collected
+</code></pre></div>
             </li>
           </ul>
+          <div class="tooltip">
+            <div>
+              You will probably still see b in weakset; the reason is that garbage collection only happens now and then, whenever the browser feels the time is right. Alas, there is no way to force a GC.
+            </div>
+          </div>
         </section>
         <section data-toc-title="">
           <h2>WeakSet and WeakMap (2)</h2>
@@ -914,20 +926,22 @@ map.set({}, 222); // doesn't make sense</code></pre></div>
             </li>
             <li>
               It returns a value <code class="hl">{value: ..., done: ...}</code>
-              <div><pre class="bigger"><code class="language-javascript overlayrun" contenteditable>var foo = {
-  [Symbol.iterator]: () => ({
-    items: ['alice', 'bob', 'clive', 'dave'],
-    next: function next () {
+              <div><pre class="bigger"><code class="language-javascript overlayrun" contenteditable>var foo = {};
+
+foo[Symbol.iterator] = function() {
+  let items = ['alice', 'bob', 'clive', 'dave'];
+  return {
+    next: function () {
       return {
-        done: this.items.length === 0,
-        value: this.items.shift()
+        done: items.length === 0,
+        value: items.shift()
       }
     }
-  })
+  }
 };
 
 for (let item of foo) {
-  console.log(item);
+  console.log(item); // alice bob clive dave
 }</code></pre></div>
             </li>
           </ul>
@@ -938,25 +952,74 @@ for (let item of foo) {
           </div>
         </section>
         <section data-toc-title="">
+          <h2>Iterators (1)</h2>
+          <ul>
+            <li>
+              Shorter syntax:
+              <div><pre class="bigger"><code class="language-javascript overlayrun" contenteditable>var foo = {
+  [Symbol.iterator]: () => ({
+    items: ['alice', 'bob', 'clive', 'dave'],
+    next: function () {
+      return {
+        done: this.items.length === 0,
+        value: this.items.shift()
+      }
+    }
+  })
+};
+
+for (let item of foo) {
+  console.log(item); // alice bob clive dave
+}</code></pre></div>
+            </li>
+          </ul>
+        </section>
+        <section data-toc-title="">
+          <h2>Iterators (1)</h2>
+          <ul>
+            <li>
+              Chipping off another 5 characters:
+              <div><pre class="bigger"><code class="language-javascript overlayrun" contenteditable>var foo = {};
+
+foo[Symbol.iterator]() {
+  return {
+    items: ['alice', 'bob', 'clive', 'dave'],
+    next: function () {
+      return {
+        done: this.items.length === 0,
+        value: this.items.shift()
+      }
+    }
+  }
+};
+
+for (let item of foo) {
+  console.log(item); // alice bob clive dave
+}</code></pre></div>
+            </li>
+          </ul>
+        </section>
+
+        <section data-toc-title="">
           <h2>Iterators (2)</h2>
           <ul>
             <li>
               A fibonacci example:
               <div><pre class="bigger"><code class="language-javascript overlayrun" contenteditable>let fibonacci = {
-    [Symbol.iterator]() {
-        let pre = 0, cur = 1;
-        return {
-           next () {
-               [pre, cur] = [cur, pre + cur];
-               return { done: false, value: cur };
-           }
-        };
-    }
+  [Symbol.iterator]() {
+    let pre = 0, cur = 1;
+    return {
+      next () {
+        [pre, cur] = [cur, pre + cur];
+        return { done: false, value: cur };
+      }
+    };
+  }
 };
 
 for (let n of fibonacci) {
-    if (n > 1000) break;
-    console.log(n);
+  if (n > 1000) break;
+  console.log(n);
 };</code></pre></div>
             </li>
           </ul>
@@ -980,8 +1043,7 @@ for (let n of fibonacci) {
     var numReturned = 0;
     return {
       next: function() {
-        if (numReturned == e.length)
-        {
+        if (numReturned == e.length) {
           return { value: undefined, done: true };
         }
         let prior = -1;
@@ -1001,8 +1063,7 @@ for (let n of fibonacci) {
   }
 }
 
-for(var i of custom_collection)
-{
+for(var i of custom_collection) {
   console.log(i); // 444 222 555 111 333
 };
 </code></pre></div>
@@ -1025,10 +1086,10 @@ for(var i of custom_collection)
             <li>
               ES5:
               <div><pre class="bigger"><code class="language-javascript" contenteditable>var Shape = function (id, x, y) {
-    this.id = id;
-    this.move(x, y) = function (x, y) {
-      this.x = x;
-      this.y = y;
+  this.id = id;
+  this.move(x, y) = function (x, y) {
+    this.x = x;
+    this.y = y;
   };
 };</code></pre></div>
             </li>
@@ -1733,7 +1794,130 @@ Promise.race([
             </li>
           </ul>
         </section>
-      </section>
+        <section data-toc-title="Case study">
+          <h2>Case study (1)</h2>
+          <ul>
+            <li>
+              Let's throw an example together in Node, where we'll use
+              <ul>
+                <li>a generator to generate URL's</li>
+                <li>promises to fetch and return the URL content (HTML)</li>
+                <li>Node modules to parse and process the HTML to markup</li>
+              </ul>
+            </li>
+            <li>
+              Node modules needed (may also be globally installed):
+              <div><pre class="bigger"><code class="language-javascript strict" data-caption="package.json" contenteditable>{
+  ...
+  "dependencies": {
+    "hget": "^3.1.0",
+    "marked": "^0.3.6",
+    "marked-terminal": "^2.0.0",
+    "request": "^2.79.0"
+  }
+}
+</code></pre></div>
+            </li>
+          </ul>
+        </section>
+        <section data-toc-title="">
+          <h2>Case study (2)</h2>
+          <ul>
+            <li>
+              Requiring modules and creating the URL generator:
+              <div><pre class="bigger"><code class="language-javascript strict" data-caption="script.js" contenteditable>// require modules
+let request = require('request');
+let hget = require('hget');
+let marked = require('marked');
+let MarkedTerminal = require('marked-terminal');
+
+// define and create a generator for URL's
+let urlGenerator = function*(){
+  let urls = [
+    'https://ikdoeict.be/',
+    'https://ikdoeict.be/opleiding-ict/'
+  ];
+  while (urls.length) yield urls.shift();
+}
+let urlGen = urlGenerator();
+
+...</code></pre></div>
+            </li>
+          </ul>
+        </section>
+        <section data-toc-title="">
+          <h2>Case study (3)</h2>
+          <ul>
+            <li>
+              Function that returns promise to request the URL:
+              <div><pre class="bigger"><code class="language-javascript strict" data-caption="script.js (cont'd)" contenteditable>... 
+
+// returns a promise to return the content found at an URL
+let getNextPage = function () {
+  let url = urlGen.next();
+  return new Promise((resolve, reject) => {
+    if (url.done) {
+      reject('Done! No more pages');
+      return;
+    } 
+    console.log(`Fetching next page at ${url.value}...`);
+    request(url.value, (err, res, body) => {
+      if (err) {
+        reject(err); 
+        return;
+      }
+      resolve(body);
+    });
+  });
+};
+
+...</code></pre></div>
+            </li>
+          </ul>
+        </section>        
+        <section data-toc-title="">
+          <h2>Case study (4)</h2>
+          <ul>
+            <li>
+              Recursive function to parse URL content delivered by promise:
+              <div><pre class="bigger"><code class="language-javascript strict" data-caption="script.js (end)" contenteditable>... 
+
+// displays and parses the content
+let displayNextPage = function() {
+  getNextPage()
+    .then(html => hget(html, {
+      markdown: true,
+      root: 'div.main-content',
+      ignore: '.at-subscribe,.mm-comments,.de-sidebar'
+    }))
+    .then(md => marked(md, {
+      renderer: new MarkedTerminal()
+    }))
+    .then(txt => { 
+      console.log(txt); 
+      displayNextPage(); 
+    })
+    .catch(reason => console.error(reason));
+}
+
+// start recursive page call
+displayNextPage();</code></pre></div>
+            </li>
+          </ul>
+        </section>
+        <section data-toc-title="">
+          <h2>Case study (5)</h2>
+          <ul>
+            <li>
+              Execute our script:
+<div><pre class="bigger"><code class="donthighlight black">&gt; node script.js
+</code></pre></div>
+              <img src="img/02_es2015/final.png" alt="" class="border" style="max-width: 80%; margin: 0 auto; display: block; margin-top: 1rem" />
+              <div class="demolink"><a href="demos/02_es2015/case-study.zip">case-study.zip</a></div>
+            </li>
+          </ul>
+        </section>
+        </section>
 
       <section data-index-title="">
         <section>

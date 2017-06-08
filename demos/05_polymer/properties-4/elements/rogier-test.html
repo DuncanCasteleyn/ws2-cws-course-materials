@@ -1,0 +1,46 @@
+<link rel="import" href="../../common/polymer/polymer.html">
+
+<dom-module id="rogier-test">
+
+  <template>
+    <div id="div1">
+      <p><slot></slot> - {{someProperty}}</p>   
+    </div>
+  </template>
+  <script>
+    class RogierTest extends Polymer.Element {
+
+      static get is() { return 'rogier-test' }
+
+      static get properties() {
+        return {
+          firstName: {
+            type: String
+          },
+          lastName: {
+            type: String
+          }
+        };
+      }
+
+      static get observers() {
+        return [
+          '_nameChanged(firstName, lastName)'
+        ]
+      }
+
+      _nameChanged(firstName, lastName) {
+        console.log('name changed to ' + firstName + ' ' + lastName);
+      }
+
+      ready() {
+        super.ready();
+        this.lastName =  'Miles';
+      }
+
+    }
+    customElements.define(RogierTest.is, RogierTest);
+
+  </script>
+
+</dom-module>

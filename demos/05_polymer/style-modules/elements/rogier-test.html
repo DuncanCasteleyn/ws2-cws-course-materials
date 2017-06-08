@@ -1,0 +1,19 @@
+<link rel="import" href="../../common/polymer/polymer.html">
+<link rel="import" href="my-colors.html">
+<dom-module id="rogier-test">
+
+  <template>
+    <!-- Include the imported styles from my-colors -->
+    <style include="my-colors"></style>
+    <p class="red">I'm red</p>
+    <p class="green">I'm green</p>
+    <p class="blue">I'm blue</p>
+  </template>
+  <script>
+    class RogierTest extends Polymer.Element {
+      static get is() { return 'rogier-test' }
+    }
+    customElements.define(RogierTest.is, RogierTest);
+  </script>
+
+</dom-module>

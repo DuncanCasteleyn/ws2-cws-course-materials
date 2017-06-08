@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Custom element &mdash; basic example</title>
+	<style>
+		rogier-quote {
+			display: inline-block;
+			min-width: 200px;
+			min-height: 30px;
+			border: 1px dashed #009;
+		}
+	</style>
+</head>
+<body>
+	<script>
+		// define new prototype based on HTMLElement
+		var RogierQuotePrototype = Object.create(HTMLElement.prototype);
+
+		// define a property on this prototype
+		Object.defineProperty(RogierQuotePrototype, 'hasQuotes', {
+		  value: true,
+		  writable: true
+		});
+
+		// define function on this prototype
+		RogierQuotePrototype.setText = function(txt) {
+		  this.innerHTML = this.hasQuotes ? '“' + txt + '”' : txt;
+		}
+
+		// quote is created callback
+		RogierQuotePrototype.createdCallback = function() {
+		  console.log('Rogier quote created');
+		};
+
+		// register element with this prototype
+		var RogierQuoteElement = document.registerElement('rogier-quote', {
+		  prototype: RogierQuotePrototype
+		});
+
+		// create new quote
+		var newRogierQuote = new RogierQuoteElement();
+		newRogierQuote.hasQuotes = true;
+		newRogierQuote.setText('wie laatst lacht, snapt de mop niet');
+		document.body.appendChild(newRogierQuote);
+	</script>
+</body>
+</html>

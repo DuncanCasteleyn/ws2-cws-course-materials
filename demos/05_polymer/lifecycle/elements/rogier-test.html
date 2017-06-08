@@ -1,0 +1,48 @@
+<link rel="import" href="../../common/polymer/polymer.html">
+
+<dom-module id="rogier-test">
+
+  <template>
+    <div id="div1">
+      <p><slot></slot> (theme: {{theme}})</p>   
+    </div>
+  </template>
+  <script>
+    class RogierTest extends Polymer.Element {
+
+      static get is() { return 'rogier-test' }
+
+      static get properties() {
+        return {
+          theme: {
+            type: String
+          }
+        };
+      }
+
+      constructor() {
+        super();
+        console.log('element constructed; theme: ' + this.theme);
+      }
+
+      ready() {
+        super.ready();
+        console.log('element ready; theme: ' + this.theme);
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        console.log('element connected');
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        console.log('element disconnected');
+      }
+
+    }
+    customElements.define(RogierTest.is, RogierTest);
+
+  </script>
+
+</dom-module>

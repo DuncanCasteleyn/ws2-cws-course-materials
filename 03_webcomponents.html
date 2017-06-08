@@ -48,7 +48,7 @@
           examples will run best on <a href="https://www.google.nl/chrome/browser/canary.html" class="canary">Chrome Canary</a>
         </small>
 				<figure>
-					<img src="img/03_webcomponents/polymer.png" alt="" width="180" />
+					<img src="img/03_webcomponents/web-components.png" alt="" width="250" style="background:none" />
 					<figcaption></figcaption>
 				</figure>
 
@@ -78,7 +78,7 @@
           <h2>web components (2)</h2>
           <ul>
             <li>
-              wouldn't it be nice if Gmail markup were like this (<a href="http://html5-demos.appspot.com/hangouts">online demo</a>)?
+              wouldn't it be nice if Gmail markup were like this (<a href="demos/03_webcomponents/hangouts/index.html">demo</a>)?
               <div><pre class="bigger"><code class="language-html" contenteditable>&lt;hangout-module&gt;
   &lt;hangout-chat from="Paul, Addy"&gt;
     &lt;hangout-discussion&gt;
@@ -196,7 +196,7 @@ console.log(document.querySelector('rogier-quote').constructor.name);
 
 // you can use its constructor now; e.g. create new quote
 var newRogierQuote = new RogierQuoteElement();
-newRogierQuote.innerHTML = 'sid amet';
+newRogierQuote.innerHTML = 'wie laatst lacht, snapt de mop niet';
 document.body.appendChild(newRogierQuote);
 </code></pre></div>
             </li>
@@ -207,7 +207,7 @@ document.body.appendChild(newRogierQuote);
               the custom name <i>must</i> contain a dash
             </li>
             <li class="arrow">
-              you may use an element before registering; it will <a href="#">resolve</a> once it is registered
+              you may use an element before registering; it will resolve once it is registered
             </li>
           </ul>
         </section>
@@ -218,7 +218,7 @@ document.body.appendChild(newRogierQuote);
               an unregistered element is called <em>unresolved</em>
             </li>
             <li>
-              when registering, an element may be styled; to prevent a <a href="http://en.wikipedia.org/wiki/Flash_of_unstyled_content" title="flash of unstyled content">FOUC</a>, hide it till then with <code class="hl">:unregistered</code>:
+              when registering, an element may be styled; to prevent a <a href="http://en.wikipedia.org/wiki/Flash_of_unstyled_content" title="flash of unstyled content">FOUC</a>, hide it till then with <code class="hl">:unresolved</code>
               <div><pre class="bigger"><code class="language-css" data-caption contenteditable>rogier-quote {
   opacity: 1;
   transition: opacity 300ms;
@@ -241,7 +241,7 @@ var RogierQuotePrototype = Object.create(HTMLElement.prototype);
 // define a property on this prototype
 Object.defineProperty(RogierQuotePrototype, 'hasQuotes', {
   value: true,
-  writable : true
+  writable: true
 });
 
 // define function on this prototype
@@ -256,8 +256,8 @@ var RogierQuoteElement = document.registerElement('rogier-quote', {
 
 // create new quote
 var newRogierQuote = new RogierQuoteElement();
-newRogierQuote.hasQuotes = false;
-newRogierQuote.setText('sid amet');
+newRogierQuote.hasQuotes = true; // change this to false and refresh
+newRogierQuote.setText('wie laatst lacht, snapt de mop niet');
 document.body.appendChild(newRogierQuote);
 </code></pre></div>
             </li>
@@ -271,8 +271,8 @@ document.body.appendChild(newRogierQuote);
               there are a number of callbacks you can listen to:
               <ul>
                 <li><em class="hl">createdCallback</em> – called when a custom element is created</li>
-                <li><em class="hl">attachedCallback</em> – Called when a custom element is inserted into the DOM</li>
-                <li><em class="hl">detachedCallback</em> – Called when a custom element is removed from the DOM</li>
+                <li><em class="hl">attachedCallback</em> – called when a custom element is inserted into the DOM</li>
+                <li><em class="hl">detachedCallback</em> – called when a custom element is removed from the DOM</li>
                 <li><em class="hl">attributeChangedCallback</em>(attrName, oldValue, newValue) – Called when an attribute on a custom element changes</li>
               </ul>
               <div><pre class="bigger"><code class="language-javascript" contenteditable>...
@@ -283,7 +283,12 @@ RogierQuotePrototype.createdCallback = function() {
 ...</code></pre></div>
             </li>
           </ul>
-          <div class="demolink"><a href="demos/03_webcomponents/custom_elements/example3.html">demo</a></div>
+          <div class="demolink"><a href="demos/03_webcomponents/custom_elements/example3b.html">demo</a></div>
+          <div class="tooltip">
+            <div>
+              You might want to implement the <code>attributeChangedCallback</code> method to make sure your elements changes when an attribute is changed.
+            </div>
+          </div>
         </section>
         <section data-toc-title="custom element examples">
           <h2>custom element examples (1)</h2>
@@ -352,7 +357,7 @@ RogierQuotePrototype.createdCallback = function() {
     // create new quote
     var newRogierQuote = new RogierQuoteElement();
     newRogierQuote.hasQuotes = false;
-    newRogierQuote.setText('sid amet');
+    newRogierQuote.setText('wie laatst lacht, snapt de mop niet');
     document.body.appendChild(newRogierQuote);
   &lt;/script&gt;
 &lt;/body&gt;
@@ -466,7 +471,7 @@ ThumbImageProto.createdCallback = function() {
 // register 'thumb-img' as extension of 'img'
 var ThumbImage = document.registerElement('thumb-img', {
     prototype: ThumbImageProto,
-    extends: 'img' overlayrun
+    extends: 'img'
 });
 </code></pre></div>
             </li>
@@ -540,7 +545,7 @@ var ThumbImage = document.registerElement('thumb-img', {
     // create new quote
     var newRogierQuote = new RogierQuoteElement();
     newRogierQuote.hasQuotes = false;
-    newRogierQuote.setText('sid amet');
+    newRogierQuote.setText('wie laatst lacht, snapt de mop niet');
     document.body.appendChild(newRogierQuote);
   &lt;/script&gt;
 &lt;/body&gt;
@@ -680,6 +685,7 @@ var ThumbImage = document.registerElement('thumb-img', {
               <img src="img/03_webcomponents/styledbutton.png" alt="">
             </li>
           </ul>
+          <div class="demolink"><a href="demos/03_webcomponents/shadow_dom/example1.html">demo</a></div>
         </section>
         <section data-toc-title="">
           <h2>encapsulation (2)</h2>
@@ -695,6 +701,7 @@ var ThumbImage = document.registerElement('thumb-img', {
               <img src="img/03_webcomponents/fuckedbutton.png" alt="">
             </li>
           </ul>
+          <div class="demolink"><a href="demos/03_webcomponents/shadow_dom/example1b.html">demo</a></div>
         </section>
         <section data-toc-title="shadow dom">
           <h2>shadow dom (1)</h2>
@@ -729,6 +736,7 @@ var ThumbImage = document.registerElement('thumb-img', {
               the inners of <code class="hl">&lt;div id="shadow-host"&gt;</code> is now shielded
             </li>
           </ul>
+          <div class="demolink"><a href="demos/03_webcomponents/shadow_dom/example2.html">demo</a></div>
         </section>
         <section data-toc-title="">
           <h2>shadow dom (2)</h2>
@@ -763,7 +771,7 @@ var ThumbImage = document.registerElement('thumb-img', {
           <ul>
             <li>
               Shadow DOM is already used to implement new elements like <code class="hl">&lt;video&gt;</code> <span style="font-size:smaller">(enable 'show user agent shadow DOM' in developer tools settings')</span>:
-              <img src="img/03_webcomponents/video_shadow.png" alt="" style="" class="border">
+              <a href="demos/03_webcomponents/shadow_dom/video.html"><img src="img/03_webcomponents/video_shadow.png" alt="" style="" class="border"></a>
             </li>
             <li class="arrow">
               the inners of <code class="hl">&lt;div id="shadow-host"&gt;</code> is now shielded
@@ -914,6 +922,72 @@ var ThumbImage = document.registerElement('thumb-img', {
               <img src="img/03_webcomponents/css_variables.png" alt="">
             </li>
           </ul>
+          <div class="tooltip">
+            <div>
+              The effect may be the same, but the mechanism is completely different: the shadow element itself can decide whether to use the CSS variables or not.
+            </div>
+          </div>
+        </section>
+        <section data-toc-title="scripts">
+          <h2>scripts (1)</h2>
+          <ul>
+            <li>
+              shadow CSS &amp; shadow elements are encapsulated, but shadow scripts remain global: 
+              <div><pre class="bigger"><code class="language-html" contenteditable style="">&lt;p id="p1"&gt;test1&lt;/p&gt;
+&lt;div id="shadow-host"&gt;&lt;/div&gt;
+&lt;script&gt;
+  var shadowroot = document.querySelector('#shadow-host').createShadowRoot();
+  var script = document.createElement("SCRIPT");
+  // shadow script has access to outside p1 in global DOM
+  script.innerHTML = `console.log(
+    document.querySelectorAll('#p1').length ? 'p1 found' : 'p1 not found'
+  );`;
+  shadowroot.appendChild(script);
+&lt;/script&gt;
+</code></pre></div>
+              <div class="demolink"><a href="demos/03_webcomponents/shadow_dom/example9.html">demo</a></div>
+              <img src="demos/03_webcomponents/shadow_dom/ss9.png" alt="" style="max-width: 30%" class="border">
+            </li>
+          </ul>
+        </section>
+        <section data-toc-title="">
+          <h2>scripts (2)</h2>
+          <ul>
+            <li>
+              shadow elements are hidden from the DOM, so you won't find them with <code>document.querySelector()</code> or alike:
+              <div><pre class="bigger"><code class="language-html wrong" contenteditable style="">&lt;div id="shadow-host"&gt;&lt;/div&gt;
+&lt;script&gt;
+  var shadowroot = document.querySelector('#shadow-host').createShadowRoot();
+  shadowroot.innerHTML = '&lt;p&gt;test2&lt;/p&gt;'
+  // won't work! shadow p2 not found in DOM
+  document.querySelector('#p2').addEventListener('click', function() {
+    console.log('p with id ' + this.id + ' clicked')  
+  });
+&lt;/script&gt;</code></pre></div>
+              <img src="demos/03_webcomponents/shadow_dom/ss10.png" alt="" style="max-width: 40%" class="border">
+            </li>
+          </ul>
+        </section>
+        <section data-toc-title="">
+          <h2>scripts (3)</h2>
+          <ul>
+            <li>
+              events should be attached to elements directly:
+              <div><pre class="bigger"><code class="language-html right" contenteditable style="">&lt;div id="shadow-host"&gt;&lt;/div&gt;
+&lt;script&gt;
+  var shadowroot = document.querySelector('#shadow-host').createShadowRoot();
+  var p2 = document.createElement("P");
+  p2.id = 'p2';
+  p2.innerHTML = 'test2';
+  // this will work
+  p2.addEventListener('click', function() {
+    console.log('p with id ' + this.id + ' clicked')  
+  });
+  shadowroot.appendChild(p2);
+&lt;/script&gt;</code></pre></div>
+              <div class="demolink"><a href="demos/03_webcomponents/shadow_dom/example11.html">demo</a></div>
+            </li>
+          </ul>
         </section>
       </section>
 
@@ -948,7 +1022,7 @@ var ThumbImage = document.registerElement('thumb-img', {
     'default text' : document.querySelector('input[name=txt]').value;
   span.style.color = document.querySelector('input[type=color]').value;
   img.src = document.querySelector('input[value=rbnImgX]').checked ?
-    'demos/x.png : 'demos/v.png';
+    'demos/x.png' : 'demos/v.png';
   btn.appendChild(img);
   btn.appendChild(span);
   document.querySelector('#buttons').appendChild(btn);
@@ -1010,7 +1084,7 @@ document.querySelector('#btnGenerate').addEventListener('click', () => {
   // customize template content
   if (inpTxt.value) content.querySelector('span').innerHTML = inpTxt.value;
   content.querySelector('span').style.color = inpColor.value;
-  content.querySelector('img').src = chbX.checked ? 'demos/x.png : 'demos/v.png';
+  content.querySelector('img').src = chbX.checked ? 'demos/x.png' : 'demos/v.png';
 
   // add to DOM
   document.querySelector('#buttons').appendChild(
@@ -1160,16 +1234,21 @@ document.querySelector('#btnGenerate').addEventListener('click', () => {
               <div><pre class="bigger"><code class="language-html" contenteditable style="">&lt;div data-text="Some Button" data-icon="demos/v.png" id="myButton"&gt;&lt;/div&gt;
 &lt;script&gt;
   // import template
-  var templateImport = document.querySelector('link[rel="import"]');
-  var template = templateImport.import.querySelector('#myButtonTemplate');
+  var templateLink = document.querySelector('link[rel="import"]');
+  var buttonTemplate = templateLink.import.querySelector('#myButtonTemplate');
 
   // create template clone
   let target = document.querySelector('#myButton');
-  let clone = document.importNode(template.content, true);
+  let clone = document.importNode(buttonTemplate.content, true);
   if (target.hasAttribute('data-text')) clone.querySelector('span').innerHTML
     = target.getAttribute('data-text');
   if (target.hasAttribute('data-icon')) clone.querySelector('img').src
     = target.getAttribute('data-icon');
+
+  // add click event
+  clone.querySelector('button').addEventListener('click', function() {
+    alert('a button was clicked');
+  });
 
   // create a Shadow Root and append
   let shadow = target.createShadowRoot();
@@ -1189,20 +1268,25 @@ document.querySelector('#btnGenerate').addEventListener('click', () => {
 &lt;/rogier-button&gt;
 &lt;script&gt;
   // import template
-  let templateImport = document.querySelector('link[rel="import"]');
-  let template = templateImport.import.querySelector('#myButtonTemplate');
+  let templateLink = document.querySelector('link[rel="import"]');
+  let buttonTemplate = templateLink.import.querySelector('#myButtonTemplate');
 
   // define new element prototype based on HTMLButtonElement prototype
-  var RogierButtonPrototype = Object.create(HTMLElement.prototype);
+  var RogierButtonPrototype = Object.create(HTMLButtonElement.prototype);
 
   // create content and behaviour
   RogierButtonPrototype.createdCallback = function() {
     // create template clone and modify
-    let clone = document.importNode(template.content, true);
+    let clone = document.importNode(buttonTemplate.content, true);
     if (this.hasAttribute('data-text')) clone.querySelector('span').innerHTML
       = this.getAttribute('data-text');
     if (this.hasAttribute('data-icon')) clone.querySelector('img').src
       = this.getAttribute('data-icon');
+
+    // add click event
+    clone.querySelector('button').addEventListener('click', function() {
+      alert('a button was clicked');
+    });
 
     // create shadow root and append
     let shadow = this.createShadowRoot();
@@ -1216,6 +1300,58 @@ document.querySelector('#btnGenerate').addEventListener('click', () => {
 &lt;/script&gt;
 </code></pre></div>
           <div class="demolink"><a href="demos/03_webcomponents/webcomponents/button_shadow_import_template_custom.html">demo</a></div>
+            </li>
+          </ul>
+        </section>
+        <section data-toc-title="Final note on events">
+          <h2>Final note on events (1)</h2>
+          <ul>
+            <li>
+              remember that shadow elements are hidden from the DOM, so events should be attached during creation:
+              <div><pre class="bigger"><code class="language-html" contenteditable style="">&lt;template id="testTemplate"&gt;
+  &lt;div id="test"&gt;Click to say hi&lt;/div&gt;
+&lt;/template&gt;
+&lt;div id="testElement"&gt;Host text&lt;/div&gt;
+&lt;script&gt;
+  let shadow = document.querySelector('#testElement').createShadowRoot();
+  let template = document.querySelector('#testTemplate');
+  let clone = document.importNode(template.content, true);
+  // document.querySelector('#test') won't work; use this instead:
+  clone.querySelector('#test').addEventListener('click', function(e) {
+    alert('Hi there');
+  });
+  shadow.appendChild(clone);
+&lt;/script&gt;</code></pre></div>
+          <div class="demolink"><a href="demos/03_webcomponents/webcomponents/events1.html">demo</a></div>
+            </li>
+          </ul>
+        </section>
+        <section data-toc-title="Final note on events">
+          <h2>Final note on events (2)</h2>
+          <ul>
+            <li>
+              there is a workaround to get it working from inside a template script through <code>document.currentScript</code>: 
+              <div><pre class="bigger"><code class="language-html" contenteditable style="">&lt;template id="testTemplate"&gt;
+  &lt;script&gt;
+    // document.querySelector('#test') won't work; little hack:
+    let elem = document.currentScript.parentNode.querySelector("#test"); 
+    elem.addEventListener('click', function(e) {
+      alert('Hi there');
+    });
+  &lt;/script&gt;
+  &lt;div id="test"&gt;Click to say hi&lt;/div&gt;
+&lt;/template&gt;
+&lt;div id="testElement"&gt;Host text&lt;/div&gt;
+&lt;script&gt;
+  let shadow = document.querySelector('#testElement').createShadowRoot();
+  let template = document.querySelector('#testTemplate');
+  let clone = document.importNode(template.content, true);
+  shadow.appendChild(clone);
+&lt;/script&gt;</code></pre></div>
+          <div class="demolink"><a href="demos/03_webcomponents/webcomponents/events2.html">demo</a></div>
+            </li>
+            <li class="arrow">
+              not sure if you should use this though, feels a little hacky...
             </li>
           </ul>
         </section>
@@ -1236,11 +1372,11 @@ document.querySelector('#btnGenerate').addEventListener('click', () => {
             </li>
           </ul>
         </section>
-        <section data-toc-title="Polymer">
+        <section data-toc-title="">
           <h2>Polymer (1)</h2>
           <ul>
             <li>
-              Google's <a href="https://www.polymer-project.org/1.0/">Polymer</a> (<a href="https://www.polymer-project.org/1.0/docs/start/getting-the-code.html">install with Bower</a>) is a set of polyfills and pre-made web components built on top of <code>platform.js</code>. An example from their website:
+              Google's <a href="https://www.polymer-project.org/1.0/">Polymer</a> (<a href="https://www.polymer-project.org/1.0/docs/start/getting-the-code.html">install with Bower</a>) is a set of polyfills and pre-made web components built on top of <code>platform.js</code>. An example <a href="https://elements.polymer-project.org/browse?q=google-map">from their website</a>:
               <div class="clearfix">
               <div style="width: 70%; float: left"><pre class="bigger"><code class="language-html" contenteditable>&lt;!-- Polyfill Web Components support for older browsers --&gt;
 &lt;script src="components/webcomponentsjs/webcomponents-lite.min.js"&gt;&lt;/script&gt;
@@ -1318,31 +1454,7 @@ document.querySelector('#btnGenerate').addEventListener('click', () => {
           </ul>
         </section>
         <section>
-          <h2>Final notes (1)</h2>
-          <ul>
-            <li>
-              Some possible discussion items (summary from <a href="https://css-tricks.com/modular-future-web-components/">css-tricks.com</a>):
-              <ul>
-                <li>
-                  <em>XML is back</em><br>
-                  ZOMG! It looks like XML! Yes, this freaks some people out (see <a href="https://groups.google.com/forum/#!searchin/polymer-dev/xml/polymer-dev/lzvaDViB_Ow/VtbeIqX0Ap0J">this discussion</a>). However, again, the alternative is our <code class="hl">&lt;div&gt;</code> soup.
-                </li>
-                <li>
-                  <em>SEO</em><br>
-                   The Polymer FAQ states:
-                   <p><i>"Search engines have been dealing with heavy AJAX based application for some time now. Moving away from JS and being more declarative is a good thing and will generally make things better."</i></p>
-                   Google announced that the Google crawler <a href="http://googlewebmastercentral.blogspot.com/2014/05/understanding-web-pages-better.html">will execute JavaScript on your page before indexing it</a>. Use a tool like <a href="http://googlewebmastercentral.blogspot.com/2014/05/rendering-pages-with-fetch-as-google.html">Fetch as Google</a> to see what the crawler sees as it parses your site.
-                </li>
-                <li>
-                  <em>Accessibility</em><br>
-                   Screen readers and other assistive technologies seem to access shadow DOM without problems; <a href="http://blog.paciellogroup.com/2012/07/notes-on-web-components-aria/">full discussion here</a>.
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </section>
-        <section>
-          <h2>Final notes (1)</h2>
+          <h2>Final notes</h2>
           <ul>
             <li>
               Some possible discussion items (summary from <a href="https://css-tricks.com/modular-future-web-components/">css-tricks.com</a>):

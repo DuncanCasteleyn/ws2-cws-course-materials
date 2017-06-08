@@ -1,0 +1,14 @@
+{
+  "name": "paper-button",
+  "homepage": "",
+  "authors": [
+    "Rogier Vanderlinde <rogier.vanderlinde@odisee.be>"
+  ],
+  "description": "paper button demo",
+  "main": "",
+  "license": "MIT",
+  "dependencies": {
+    "paper-checkbox": "PolymerElements/paper-checkbox#2.0-preview",
+    "polymer": "Polymer/polymer#2.0.0-rc.2"
+  }
+}

@@ -1,0 +1,43 @@
+<link rel="import" href="../../common/polymer/polymer.html">
+
+<dom-module id="contact-picture">
+  <template>
+    <style>
+      img {
+        max-width: 100%;
+        box-sizing: border-box;
+        border: 2px solid #888;
+        border-radius: 20px;
+      }  
+      div {
+        padding: 10px;
+        background-color: #eee;
+      }
+    </style>
+    <div>
+      <template is="dom-if" if="{{source}}">
+        <img src="{{source}}" alt="" /></div>
+      </template>
+      <template is="dom-if" if="{{!source}}">
+        <img src="images/default.jpg" alt="" /></div>
+      </template>
+  </template>
+   
+  <script>
+    class ContactPicture extends Polymer.Element {
+
+      static get is() { return 'contact-picture' }
+
+      static get properties() {
+        return {
+          source: {
+            type: String,
+            value: ''
+          }  
+        }
+      }
+
+    }
+    customElements.define(ContactPicture.is, ContactPicture);
+  </script>
+</dom-module>

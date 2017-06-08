@@ -1,0 +1,38 @@
+<link rel="import" href="../../common/polymer/polymer.html">
+
+<dom-module id="rogier-test">
+
+  <template>
+    <div id="div1">
+      <p><slot></slot> - {{someProperty}}</p>   
+    </div>
+  </template>
+  <script>
+    class RogierTest extends Polymer.Element {
+
+      static get is() { return 'rogier-test' }
+
+      static get properties() {
+        return {
+          someProperty: {
+            type: String,
+            observer: '_prop1Changed'
+          }
+        };
+      }
+
+      _prop1Changed(newValue, oldValue) {
+        console.log('changed from ' + oldValue + ' to ' + newValue);
+      }
+
+      ready() {
+        super.ready();
+        this.someProperty =  'goodbye';
+      }
+
+    }
+    customElements.define(RogierTest.is, RogierTest);
+
+  </script>
+
+</dom-module>

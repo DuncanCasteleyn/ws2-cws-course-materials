@@ -1,0 +1,49 @@
+<link rel="import" href="../../common/polymer/polymer.html">
+
+<dom-module id="rogier-test">
+
+  <template>
+    <style>
+      div {
+        border: 1px dashed blue;
+        display: inline-block;
+        padding: 5px 10px;
+      }
+      .light {
+        color: #333;
+        background-color: #ff9;  
+      }
+      .dark {
+        color: #ff9;
+        background-color: #333;  
+      }
+
+    </style>
+    <div id="div1">
+      <p><slot></slot> (theme: {{customTheme}})</p>   
+    </div>
+  </template>
+  <script>
+    class RogierTest extends Polymer.Element {
+
+      static get is() { return 'rogier-test' }
+
+      static get properties() {
+        return {
+          customTheme: {
+            type: String
+          }
+        };
+      }
+
+      ready() {
+        super.ready();
+        this.shadowRoot.querySelector('div').classList.add(this.customTheme);
+      }
+
+    }
+    customElements.define(RogierTest.is, RogierTest);
+
+  </script>
+
+</dom-module>

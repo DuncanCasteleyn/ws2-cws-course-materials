@@ -13,18 +13,23 @@
 		'use strict'
 
 		// import template
-		let templateImport = document.querySelector('link[rel="import"]');
-		let template = templateImport.import.querySelector('#myButtonTemplate');
+		let templateLink = document.querySelector('link[rel="import"]');
+		let buttonTemplate = templateLink.import.querySelector('#myButtonTemplate');
 
 		// define new element prototype based on HTMLButtonElement prototype
-		var RogierButtonPrototype = Object.create(HTMLElement.prototype);
+		var RogierButtonPrototype = Object.create(HTMLButtonElement.prototype);
 
 		// create content and behaviour
 		RogierButtonPrototype.createdCallback = function() {
 			// create template clone and modify
-			let clone = document.importNode(template.content, true);
+			let clone = document.importNode(buttonTemplate.content, true);
 			if (this.hasAttribute('data-text')) clone.querySelector('span').innerHTML = this.getAttribute('data-text');
 			if (this.hasAttribute('data-icon')) clone.querySelector('img').src = this.getAttribute('data-icon');
+
+			// add click event
+			clone.querySelector('button').addEventListener('click', function() {
+				alert('a button was clicked');
+			});
 
 			// create shadow root and append
 			let shadow = this.createShadowRoot();

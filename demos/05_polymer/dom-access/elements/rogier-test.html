@@ -1,0 +1,54 @@
+<link rel="import" href="../../common/polymer/polymer.html">
+
+<dom-module id="rogier-test">
+
+  <template>
+    <style>
+      /* styling the host, i.e. <rogier-test> */
+      :host {
+        display: inline-block;
+        padding: 10px 20px;
+      }
+      /* host theme */
+      :host(.theme-dark) {
+        background-color: navy;
+      }
+      /* styling slotted elements */
+      div > ::slotted(p) {
+        font-style: italic;
+        font-family: Georgia;
+        color: white;
+      }
+      /* styling template DOM */
+      p {
+        color: red;
+      }
+      #div1 {
+        padding: 5px;
+      }
+    </style>
+    <div id="div1">
+      <h1 id="header1">this is some title</h1>
+      <slot></slot>
+      <p id="par1">hello</p>
+    </div>
+  </template>
+  <script>
+    class RogierTest extends Polymer.Element {
+
+      static get is() { return 'rogier-test' }
+
+      ready() {
+        super.ready();
+        this.$.div1.style.backgroundColor = '#999';
+        this.$.par1.innerHTML = 'goodbye';
+        // this.shadowRoot.querySelector('#par1').innerHTML = 'goodbye';
+        // Polymer.dom(this.root).querySelector('par1').innerHTML = 'goodbye';
+      }
+
+    }
+    customElements.define(RogierTest.is, RogierTest);
+
+  </script>
+
+</dom-module>

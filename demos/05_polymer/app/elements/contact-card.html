@@ -1,0 +1,53 @@
+<link rel="import" href="../../common/polymer/polymer.html">
+<link rel="import" href="contact-picture.html">
+<link rel="import" href="contact-info.html">
+
+<dom-module id="contact-card">
+
+  <template>
+    <style>
+      .card {
+        width: 200px;
+        overflow: hidden;
+        float: left;
+        margin-right: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      }
+      contact-picture {
+        display: block;
+      }
+      contact-info {
+        display: block;
+      }
+    </style>
+    <div class="card">
+      <contact-picture source="{{avatar}}"></contact-picture>
+      <contact-info name="{{name}}" email="{{email}}"></contact-info>
+    </div>
+  </template>
+
+  <script>
+    class ContactCard extends Polymer.Element {
+
+      static get is() { return 'contact-card' }
+
+      static get properties() {
+        return {
+          name: {
+            type: String
+          },
+          email: {
+            type: String
+          },
+          avatar: {
+            type: String
+          }
+        };
+      }
+
+    }
+    customElements.define(ContactCard.is, ContactCard);
+
+  </script>
+
+</dom-module>

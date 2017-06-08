@@ -1,0 +1,15 @@
+
+Data binding with {{}} and [[]] 
+	see https://www.polymer-project.org/2.0/docs/devguide/gesture-events
+	see https://www.polymer-project.org/2.0/docs/devguide/data-system
+
+
+
+
+
+Gesture events
+==============
+
+Use tap, not click
+
+zie app-layout/demo/sample-content.html voor vs 1 Polymer

@@ -1,0 +1,49 @@
+<link rel="import" href="../../common/polymer/polymer.html">
+
+<dom-module id="contact-info">
+  <template>
+    <style>
+      .name {
+        color: green;
+        font-family: Arial;
+        text-align: center;
+      }
+      .email {
+        text-align: center;
+      }
+      .email a {
+        color: purple;
+        font-family: Arial;
+        text-decoration: none;
+        font-size: 10px;
+      }
+    </style>
+    <p class="name">{{name}}</p>
+    <p class="email">
+      &nbsp;
+      <template is="dom-if" if="{{email}}">
+        <a href="mailto:">{{email}}</a>
+      </template>
+    </p>
+  </template>
+   
+  <script>
+    class ContactInfo extends Polymer.Element {
+
+      static get is() { return 'contact-info' }
+
+      static get properties() {
+        return {
+          name: {
+            type: String
+          },  
+          email: {
+            type: String
+          }  
+        };
+      }
+
+    }
+    customElements.define(ContactInfo.is, ContactInfo);
+  </script>
+</dom-module>

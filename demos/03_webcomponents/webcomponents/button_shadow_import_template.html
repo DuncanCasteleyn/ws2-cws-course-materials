@@ -12,14 +12,19 @@
 		'use strict'
 
 		// import template
-		var templateImport = document.querySelector('link[rel="import"]');
-		var template = templateImport.import.querySelector('#myButtonTemplate');
+		var templateLink = document.querySelector('link[rel="import"]');
+		var buttonTemplate = templateLink.import.querySelector('#myButtonTemplate');
 
 		// create template clone
 		let target = document.querySelector('#myButton');
-		let clone = document.importNode(template.content, true);
+		let clone = document.importNode(buttonTemplate.content, true);
 		if (target.hasAttribute('data-text')) clone.querySelector('span').innerHTML = target.getAttribute('data-text');
 		if (target.hasAttribute('data-icon')) clone.querySelector('img').src = target.getAttribute('data-icon');
+
+		// add click event
+		clone.querySelector('button').addEventListener('click', function() {
+			alert('a button was clicked');
+		});
 
 		// create a Shadow Root and append
 		let shadow = target.createShadowRoot();

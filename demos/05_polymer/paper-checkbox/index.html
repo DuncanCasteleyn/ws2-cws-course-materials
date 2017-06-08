@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Testpage</title>
+	<meta charset="utf-8" ?>
+	<script src="../common/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="../common/paper-checkbox/paper-checkbox.html">
+	<style is="custom-style">
+	  paper-checkbox {
+	    font-family: 'Roboto', sans-serif;
+	    margin: 24px;
+	  }
+
+	  paper-checkbox.somestyle:first-child {
+	    --primary-color: #ff5722;
+	  }
+	</style>
+</head>
+<body>
+	<paper-checkbox class="somestyle">link</paper-checkbox>
+	<paper-checkbox>link</paper-checkbox>
+</body>
+</html>

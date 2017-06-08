@@ -1,0 +1,1392 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Polymer</title>
+  <meta name="author" content="Rogier van der Linde - ikdoeict.be">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="library/reveal/css/reveal.min.css">
+	<link rel="stylesheet" href="library/reveal/css/theme/rogier.css" id="rogier">
+  <link rel="stylesheet" href="library/highlight/styles/vs.css">
+	<link rel="stylesheet" href="css/common.css">
+  <style>
+
+    .reveal ul.chapterlist {
+      column-count: 2;
+      column-gap: 60px;
+      -moz-column-count: 2;
+      -moz-column-gap: 60px;
+      -webkit-column-count: 2;
+      -webkit-column-gap: 60px;
+      padding-left: 20px;
+      padding-bottom: 30px;
+      display: block;
+      width: 680px;
+    }
+
+    .demolink {
+      margin-bottom: -20px !important;
+      margin-top: -10px !important;
+    }
+
+  </style>
+  <script>
+    'use strict'
+  </script>
+</head>
+
+<body>
+
+  <!-- SLIDES -->
+	<div class="reveal">
+
+		<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+			<section>
+				<h1>Polymer</h1>
+				<small>use the arrow keys to navigate; press space for slide overview<br />
+          examples will run best on <a href="https://www.google.nl/chrome/browser/canary.html" class="canary">Chrome Canary</a>
+        </small>
+				<figure>
+					<img src="img/05_polymer/polymer.png" alt="" width="180" />
+					<figcaption></figcaption>
+				</figure>
+
+				<footer>
+					<a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:rogier.vanderlinde@odisee.be">rogier.vanderlinde@odisee.be</a>
+				</footer>
+			</section>
+
+      <section>
+        <section>
+          <h1>Polymer</h1>
+          <h2>Intro</h2>
+          <ul class="chapterlist">
+            <!-- to be filled by Javascript -->
+          </ul>
+        </section>
+        <section>
+          <h2>Introducting polymer</h2>
+          <ul>
+            <li>
+              Javascript library developed by Google devs and GitHub contributors 
+            </li>
+            <li>
+              helps creating custom reusable HTML elements based on native technologies: 
+              <ul>
+                <li>custom elements</li>
+                <li>shadow DOM</li>
+                <li>HTML imports</li>
+                <li>HTML templates</li>
+              </ul>
+            </li>
+            <li>
+              currently most important library together with <a href="https://angular.io/">AngularJS</a> (Google) and <a href="https://facebook.github.io/react/">React</a> (Facebook) 
+            </li>
+          </ul>
+          <div class="tooltip">
+            <div>
+              In this course we'll choose Polymer, as it is arguably the easiest to learn of the three - at least much easier than Angular - and it is closely related to the underlying native DOM technologies - React is more Javascript based.
+            </div>
+          </div>
+        </section>
+        <section data-toc-title="History">
+          <h2>Short history (1)</h2>
+          <ul>
+            <li>
+              starting as a promises polyfill, it gradually expanded into three subareas:
+              <ul>
+                <li>Polymer polyfill library (<a href="https://www.polymer-project.org/">polymer-project.org</a>): set of polyfills for shadow DOM, imports etc...</li>
+                <li>Material Design (<a href="https://material.io/">material.io</a>): design guidelines &amp; principles for developing web apps</li>
+                <li>custom elements catalog (<a href="https://www.webcomponents.org/">webcomponents.org</a>): discussing &amp; sharing web components</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        <section data-toc-title="">
+          <h2>Short history (2)</h2>
+          <ul>
+            <li>
+              V.0.5 (2014) 
+              <ul>
+                <li>first version ready to use for early adopters</li>
+                <li>polyfills + large number of Core (generic functionality: Ajax, layout, toolbar, tooltip...) and Paper (various UI &amp; input) elements</li>
+                <li>based on Custom Elements / Shadow DOM V0 specification (ES5/prototype based)</li>
+              </ul>
+            </li>
+            <li>
+              V.1 (2015) 
+              <ul>
+                <li>first production ready version</li>
+                <li>much improved performance</li>
+                <li>elements catalog split from Polymer catalog</li>
+              </ul>
+            </li>
+            <li>
+              V.2 (currently in preview) 
+              <ul>
+                <li>switch to Custom Elements V1 specification (ES6/class based)</li>
+                <li>switch to Shadow Dom V1 specification</li>
+              </ul>
+            </li>
+          </ul>
+          <div class="tooltip">
+            <div>
+              v1 replaces V0 which was an experimental try. V0 was a Google-only proposed specification while v1 is a WHATWG Web Standard adopted by all major browser vendors (though not implemented yet, but may be polyfilled by Polymer 2.0)
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2>Basic example</h2>
+          <ul>
+            <li>
+              simple custom button example:
+              <div><pre class="bigger"><code class="language-html" contenteditable data-caption="index.html">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;title&gt;Testpage&lt;/title&gt;
+  &lt;meta charset="utf-8" ?&gt;
+  &lt;script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"&gt;&lt;/script&gt;
+  &lt;link rel="import" href="elements/rogier-button.html"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;rogier-button icon="images/v.png"&gt;Some Button&lt;/rogier-button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+            </li>
+          </ul>
+        </section>
+        <section data-toc-title="">
+          <h2>Polymer 1.0 element</h2>
+          <ul>
+            <li>
+              custom button definition in <a href="https://www.polymer-project.org/1.0/docs/devguide/quick-tour">Polymer 1.0</a>:
+              <div><pre class="bigger"><code class="language-html" contenteditable data-caption="rogier-button.html">&lt;link rel="import" href="../bower_components/polymer/polymer.html"&gt;
+
+&lt;dom-module id="rogier-button"&gt;
+
+  &lt;template&gt;
+    &lt;style&gt;
+      /* ...styles here... */
+    &lt;/style&gt;
+    &lt;button class="my-button"&gt;
+      &lt;img src="{{icon}}" alt=""&gt;
+      &lt;span&gt;&lt;content&gt;&lt;/content&gt;&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/template&gt;
+  &lt;script&gt;
+    Polymer({
+      // name
+      is: 'rogier-button',
+      // properties
+      properties: {
+        icon: {
+          type: String,
+          value: 'images/v.png' // default value
+        }
+      },
+      // callback
+      attached: function() {
+        console.log('hurray! a new button is born using icon ' 
+          + this.querySelector('img').src);
+      }
+    });
+  &lt;/script&gt;
+
+&lt;/dom-module&gt;
+</code></pre></div>
+            </li>
+          </ul>
+          <div class="demolink"><a href="demos/05_polymer/rogier-button-v1/index.html">demo</a> &amp; <a href="demos/05_polymer/rogier-button-v1.zip">zip</a></div>
+        </section>
+        <section>
+          <h2>Polymer 2.0 element</h2>
+          <ul>
+            <li>
+              custom button definition in <a href="https://www.polymer-project.org/2.0/docs/about_20">Polymer 2.0</a>:
+              <div><pre class="bigger"><code class="language-html" contenteditable data-caption="rogier-button.html">&lt;link rel="import" href="../bower_components/polymer/polymer.html"&gt;
+
+&lt;dom-module id="rogier-button"&gt;
+
+  &lt;template&gt;
+    &lt;style&gt;
+      /* ...styles here... */
+    &lt;/style&gt;
+    &lt;button class="my-button"&gt;
+      &lt;img src="{{icon}}" alt=""&gt;
+      &lt;span&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/template&gt;
+  &lt;script&gt;
+    class RogierButton extends Polymer.Element {
+      // name
+      static get is() { return 'rogier-button' }
+      // properties
+      static get properties() {
+        return {
+          icon: {
+            type: String,
+            value: 'images/v.png'
+          }
+        };
+      }
+      // callback
+      connectedCallback() {
+        super.connectedCallback();
+        console.log('hurray! a new button is born using icon ');
+      }
+
+    }
+
+    // Register custom element definition using standard platform API
+    customElements.define(RogierButton.is, RogierButton);
+  &lt;/script&gt;
+
+&lt;/dom-module&gt;
+</code></pre></div>
+            </li>
+          </ul>
+          <div class="demolink"><a href="demos/05_polymer/rogier-button-v2/index.html">demo</a> &amp; <a href="demos/05_polymer/rogier-button-v2.zip">zip</a></div>
+        </section>
+        <section>
+          <h2>Polymer 1.0 to 2.0</h2>
+          <ul>
+            <li>
+              Polymer 2.0 follows the newer V1 specifications
+            </li>
+            <li>
+              <a href="https://hayato.io/2016/shadowdomv1/">shadow DOM changes</a> reflected in Polymer:
+              <ul>
+                <li><code>&lt;content&gt;&lt;/content&gt;</code> changes to <code>&lt;slot&gt;&lt;/slot&gt;</code></li>
+                <li><code>::content</code> changes to <code>::slotted</code></li>
+              </ul>
+            </li>
+            <li>
+              custom elements changes reflected in Polymer:
+              <ul>
+                <li>
+                  callback methods are renamed:
+                  <ul class="no-style">
+                    <li><code>created</code> changes to <code>constructor</code></li>
+                    <li><code>attached</code> changes to <code>connectedCallback</code></li>
+                    <li><code>detached</code> changes to <code>disconnectedCallback</code></li>
+                    <li><code>attributeChanged</code> changes to <code>attributeChangedCallback</code></li>
+                  </ul>
+                </li>
+                <li>
+                  construction with a class instead of a prototype:
+                  <ul>
+                    <li class="no-style">
+
+                      V0: <code>var RogierQuotePrototype = Object.create(HTMLElement.prototype);</code> 
+                      V1: <code>class MyElement extends HTMLElement { ... }</code> <br>
+                      Polymer V1: <code>Polymer({ is: 'rogier-button' });</code><br>
+                      Polymer V2: <code>class RogierButton extends Polymer.Element { ... }</code><br>
+                      </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1>Polymer</h1>
+          <h2>Getting started</h2>
+          <ul class="chapterlist">
+            <!-- to be filled by Javascript -->
+          </ul>
+        </section>
+        <section>
+          <h2>Using Polymer</h2>
+          <ul>
+            <li>
+              first install Polymer CLI globally:
+              <div><pre class="bigger"><code class="donthighlight black">&gt; npm install -g polymer-cli
+</code></pre></div>
+            </li>
+            <li>
+              in your project, install Polymer RC2:
+              <div><pre class="bigger"><code class="donthighlight black">&gt; bower install --save Polymer/polymer#2.0.0-rc.2
+</code></pre></div>
+            </li>
+            <li>
+              view your project with the built-in Polymer server:
+              <div><pre class="bigger"><code class="donthighlight black">&gt; polymer serve
+  <span style="color:#0c0">info</span>: Files in this directory are available under the following URLs
+  applications: http://127.0.0.1:8000
+  reusable components: http://127.0.0.1:8000/components/rogier-button-demo/
+</code></pre></div>
+            </li>
+            <li class="arrow">
+              now open http://127.0.0.1:8000 in your browser
+            </li>
+          </ul>
+        </section>
+        <section data-toc-title="Using Polymer elements">
+          <h2>Using Polymer elements (1)</h2>
+          <ul>
+            <li>
+              in your project, install the element, e.g. a <a href="https://www.webcomponents.org/element/PolymerElements/paper-checkbox">paper checkbox</a>:
+              <div><pre class="bigger"><code class="donthighlight black">&gt; bower install --save PolymerElements/paper-checkbox#2.0-preview
+</code></pre></div>
+            </li>
+            <li>
+              include <code>webcomponents-lite.js</code> polyfill, import and use the element:
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html">&lt;head&gt;
+  ...
+  &lt;script src="bower_components/webcomponentsjs/webcomponents-lite.js"&gt;&lt;/script&gt;
+  &lt;link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  ...
+  &lt;paper-checkbox&gt;option 1&lt;/paper-checkbox&gt;
+  &lt;paper-checkbox&gt;option 2&lt;/paper-checkbox&gt;
+  ...
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+            </li>
+          </ul>
+        </section>        
+        <section data-toc-title="">
+          <h2>Using Polymer elements (2)</h2>
+          <ul>
+            <li>
+              many elements allow <a href="https://www.webcomponents.org/element/PolymerElements/paper-checkbox">styling with CSS variables</a>:
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html">...
+  &lt;style is="custom-style"&gt;
+    paper-checkbox {
+      font-family: 'Roboto', sans-serif;
+      margin: 24px;
+    }
+
+    paper-checkbox.somestyle:first-child {
+      --primary-color: #ff5722; /* CSS variable provided by custom element */
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  ...
+  &lt;paper-checkbox class="somestyle"&gt;option 1&lt;/paper-checkbox&gt;
+  &lt;paper-checkbox&gt;option 2&lt;/paper-checkbox&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div>
+            </li>
+          </ul>
+          <div class="demolink"><a href="demos/05_polymer/paper-checkbox/index.html">demo</a> &amp; <a href="demos/05_polymer/paper-checkbox.zip">zip</a></div>
+        </section>
+        <section data-toc-title="building a custom element">
+          <h2>building a custom element (1)</h2>
+          <ul>
+            <li>
+              build your new element, inheriting from polymer.html base class:
+              <div><pre class="bigger"><code class="language-html" data-caption="elements/rogier-button.html" contenteditable style="max-height: 280px">&lt;link rel="import" 
+      href="../bower_components/polymer/polymer.html"&gt;
+
+&lt;dom-module id="rogier-test"&gt;
+
+  &lt;template&gt;
+    &lt;style&gt;
+      /* your template styles here */
+      div {
+        border: 1px solid;
+      }
+    &lt;/style&gt;
+    &lt;!-- your template HTML here --&gt;
+    &lt;div&gt;just some content&lt;/div&gt;
+  &lt;/template&gt;
+  &lt;script&gt;
+    // Extend Polymer.Element base class
+    class RogierTest extends Polymer.Element {
+      static get is() { return 'rogier-test' }
+    }
+    // Register custom element definition using standard platform API
+    customElements.define(RogierTest.is, RogierTest);
+  &lt;/script&gt;
+
+&lt;/dom-module&gt;</code></pre></div>
+              <ul class="arrow">
+                <li>
+                  your element's name should be lowercase and contain at least one dash
+                </li>
+              </ul>
+            </li>
+          </ul>  
+        </section>
+        <section data-toc-title="">
+          <h2>building a custom element (2)</h2>
+          <ul>
+            <li>
+              in index.html, include the <code>webcomponents-lite.js</code> polyfill and import your new element:
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html" contenteditable>&lt;head&gt;
+  ...
+  &lt;script src="bower_components/webcomponentsjs/webcomponents-lite.js"&gt;&lt;/script&gt;
+  &lt;link rel="import" href="elements/rogier-button.html"&gt;
+&lt;/head&gt;
+</code></pre></div>
+            </li>
+          </ul>  
+        </section>
+        <section data-toc-title="notes">
+          <h2>Notes (1)</h2>
+          <ul>
+            <li>
+              <code>webcomponents-lite.js</code> doesn't really polyfill shadow DOM - which is slow - but simulates it with wrappers ('shady DOM')
+            </li>
+            <li>
+              alternatives exist:
+              <ul>
+                <li>
+                  <code>webcomponents.js</code>: with full shadow DOM polyfill (not recommended)
+                </li>
+                <li>
+                  <code>webcomponents-loader.js</code>: uses feature detection and only polyfills where needed; smaller but is served asynchronously so you should wait for WebComponentsReady to interact:
+                  <div><pre class="bigger"><code class="language-javascript">window.addEventListener('WebComponentsReady', function() {
+  // polyfills are loaded; now you may interact
+  // ...
+});</code></pre></div>
+                </li>
+              </ul>
+            </li>
+          </ul>  
+        </section>
+        <section data-toc-title="">
+          <h2>Notes (2)</h2>
+          <ul>
+            <li>
+              the built-in Polymer server pre-compiles ES6 to ES5 and maximizes <a href="https://www.polymer-project.org/2.0/docs/browsers">browser support</a>:
+              <div><pre class="bigger"><code class="donthighlight black">&gt; polymer serve</code></pre></div>
+              <ul class="arrow">
+                <li>
+                  for browsers supporting ES6 you can also run directly from the localhost
+                </li>
+                <li>
+                  if you host your app on a server without polymer installed, you should <a href="https://www.polymer-project.org/2.0/docs/browsers#es6">precompile it to ES5</a>!
+                </li>
+              </ul>
+            </li>
+            <li>
+              the polyfill provides support for HTML imports, custom elements and shadow DOM:
+              <div><pre class="bigger"><code class="language-html">&lt;script src="bower_components/webcomponentsjs/webcomponents-lite.js"&gt;&lt;/script&gt;</code></pre></div>
+              <ul class="arrow">
+                <li>
+                  for browsers supporting web components you can even omit this polyfill
+                </li>
+              </ul>
+            </li>
+          </ul>  
+          <div class="tooltip">
+            <div>
+              E.g. in Chrome 56 it works from localhost without polyfill, in Firefox 52 from localhost but only with polyfill, and in Safari 9.1 it only works polyfilled and when served by Polymer 
+            </div>
+          </div>
+        </section>
+        <section data-toc-title="">
+          <h2>Notes (3)</h2>
+          <ul>
+            <li>
+              in Polymer 1 you can extend existing elements, like:
+              <div><pre class="bigger"><code class="language-javascript">&lt;a is="my-link"&gt;...&lt;/a&gt;</code></pre></div>
+            </li>
+            <li>
+              while extending elements is still in the V1 spec, Apple has said it will not implement it, so in Polymer 2 you should wrap it, like:
+              <div><pre class="bigger"><code class="language-javascript">&lt;my-link&gt;
+  &lt;a&gt;...&lt;/a&gt;
+&lt;/my-link&gt;</code></pre></div>
+            </li>
+          </ul>  
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1>Polymer</h1>
+          <h2>Polymer basics</h2>
+          <ul class="chapterlist">
+            <!-- to be filled by Javascript -->
+          </ul>
+        </section>
+        <section data-toc-title="Creating elements">
+          <h2>Creating nodes</h2>
+          <ul>
+            <li>
+              sample custom element:
+              <div><pre class="bigger"><code class="language-html" contenteditable data-caption="rogier-test.html" style="height: 200px">&lt;link rel="import" href="../../common/polymer/polymer.html"&gt;
+
+&lt;dom-module id="rogier-test"&gt;
+
+  &lt;template&gt;
+    &lt;div id="div1"&gt;
+      &lt;p&gt;&lt;slot&gt;default text&lt;/slot&gt;&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/template&gt;
+  &lt;script&gt;
+    class RogierTest extends Polymer.Element {
+
+      static get is() { return 'rogier-test' }
+
+      ready() {
+        super.ready();
+        console.log('element ready');
+      }
+
+    }
+    customElements.define(RogierTest.is, RogierTest);
+
+  &lt;/script&gt;
+
+&lt;/dom-module&gt;
+</code></pre></div>
+            </li>
+            <li>
+              three ways to create nodes: 
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html">&lt;rogier-test&gt;this is test 1&lt;/rogier-test&gt; &lt;!-- directly in DOM --&gt;
+&lt;script&gt;
+  // with createElement
+  var myRogierTest1 = document.createElement('rogier-test'); 
+  // with constructor
+  var myRogierTest2 = new RogierTest(); 
+  document.body.appendChild(myRogierTest1);
+  document.body.appendChild(myRogierTest2);
+&lt;/script&gt;
+</code></pre></div>
+            </li>
+          </ul>  
+          <div class="demolink"><a href="demos/05_polymer/creation/index.html">demo</a></div>
+        </section>
+        <section data-toc-title="Lifecycle callbacks">
+          <h2>Lifecycle callbacks (1)</h2>
+          <ul>
+            <li>
+              Polymer implements the standard Custom Element lifecycle callbacks:
+              <ul>
+                <li>
+                  <code>constructor</code>: custom element is created, but properties and DOM are not initialized yet
+                </li>
+                <li>
+                  <code>ready</code>: properties and DOM are initialized
+                </li>
+                <li>
+                  <code>connectedCallback</code>: custom element is attached to the document
+                </li>
+                <li>
+                  <code>disconnectedCallback</code>: custom element is detached from the document
+                </li>
+                <li>
+                  <del><code>attributeChangedCallback</code>: custom element's attributes changes</del> (in Polymer: rather use observers)
+                </li>
+                <li class="arrow">
+                  <code>constructor</code> and <code>ready</code> only happen once, the other three can happen any time
+                </li>
+              </ul>
+            </li>
+          </ul>  
+        </section>
+        <section data-toc-title="">
+          <h2>Lifecycle callbacks (2)</h2>
+          <ul>
+            <li>
+              Example HTML with <code>&lt;rogier-test&gt;</code> custom element:  
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html">&lt;div id="block1"&gt;
+  &lt;rogier-test theme="dark"&gt;this is test 1&lt;/rogier-test&gt;
+&lt;/div&gt;
+&lt;div id="block2"/&gt;
+&lt;script&gt;
+  var node = document.querySelector('rogier-test');
+  document.querySelector('#block1').removeChild(node);
+  document.querySelector('#block2').appendChild(node);
+&lt;/script&gt;</code></pre></div>
+            </li>
+          </ul>  
+        </section>
+        <section data-toc-title="">
+          <h2>Lifecycle callbacks (3)</h2>
+          <ul>
+            <li>
+              <code>&lt;rogier-test&gt;</code> definition:  
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html" style="max-height: 280px;">&lt;link rel="import" href="../bower_components/polymer/polymer.html"&gt;
+
+&lt;dom-module id="rogier-test"&gt;
+
+  &lt;template&gt;
+    &lt;div id="div1"&gt;
+      &lt;p&gt;&lt;slot&gt;&lt;/slot&gt; (theme: {{theme}})&lt;/p&gt;   
+    &lt;/div&gt;
+  &lt;/template&gt;
+
+  &lt;script&gt;
+    class RogierTest extends Polymer.Element {
+
+      // element name
+      static get is() { return 'rogier-test' }
+      
+      // we'll explain properties later
+      static get properties() {
+        return {
+          theme: {
+            type: String
+          }
+        };
+      }
+
+      // element constructed, but DOM and properties not loaded
+      constructor() {
+        super();
+        console.log('element constructed; theme: ' + this.theme);
+      }
+
+      // DOM and properties loaded
+      ready() {
+        super.ready();
+        console.log('element ready; theme: ' + this.theme);
+      }
+
+      // element added to document
+      connectedCallback() {
+        super.connectedCallback();
+        console.log('element connected);
+      }
+
+      // element removed from document
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        console.log('element disconnected);
+      }
+
+    }
+    customElements.define(RogierTest.is, RogierTest);
+
+  &lt;/script&gt;
+
+&lt;/dom-module&gt;</code></pre></div>
+            </li>
+            <li class="arrow">
+              do <i>not</i> forget to call <code>super()</code> in each callback!
+            </li>
+          </ul>  
+          <div class="demolink"><a href="demos/05_polymer/lifecycle/index.html">demo</a></div>
+        </section>
+        <section data-toc-title="Properties">
+          <h2>Properties (1)</h2>
+          <ul>
+            <li>
+              properties example
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html">&lt;rogier-test custom-theme="light"&gt;this is test 1&lt;/rogier-test&gt;
+&lt;rogier-test custom-theme="dark"&gt;this is test 2&lt;/rogier-test&gt;</code></pre></div>
+              <div><pre class="bigger"><code class="language-html" data-caption="rogier-test.html" style="max-height: 250px;">&lt;link rel="import" href="../../common/polymer/polymer.html"&gt;
+
+&lt;dom-module id="rogier-test"&gt;
+
+  &lt;template&gt;
+    &lt;style&gt;
+      div {
+        border: 1px dashed blue;
+        display: inline-block;
+        padding: 5px 10px;
+      }
+      .light {
+        color: #333;
+        background-color: #ff9;  
+      }
+      .dark {
+        color: #ff9;
+        background-color: #333;  
+      }
+
+    &lt;/style&gt;
+    &lt;div id="div1"&gt;
+      &lt;p&gt;&lt;slot&gt;&lt;/slot&gt; (theme: {{customTheme}})&lt;/p&gt;   
+    &lt;/div&gt;
+  &lt;/template&gt;
+  &lt;script&gt;
+    class RogierTest extends Polymer.Element {
+
+      static get is() { return 'rogier-test' }
+
+      static get properties() {
+        return {
+          customTheme: {
+            type: String,
+            value: 'normal' // default value
+          }
+        };
+      }
+
+      ready() {
+        super.ready();
+        this.shadowRoot.querySelector('div').classList.add(this.customTheme);
+      }
+
+    }
+    customElements.define(RogierTest.is, RogierTest);
+
+  &lt;/script&gt;
+
+&lt;/dom-module&gt;
+</code></pre></div>
+            </li>
+            <li class="arrow">
+              attribute name: custom-theme; property name: customTheme
+            </li>
+            <li class="arrow">
+              properties are camelCased versions of attributes
+            </li>
+          </ul>  
+          <div class="demolink"><a href="demos/05_polymer/properties-1/index.html">demo</a></div>
+        </section>      
+        <section data-toc-title="">
+          <h2>Properties (2)</h2>
+          <ul>
+            <li>
+              possible types are String, Boolean, Number, Array and Object. For Array and Object, use JSON:
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html">
+&lt;my-element book='{ "title": "Persuasion", "author": "Austen" }'&gt;&lt;/my-element&gt;</code></pre></div>
+            </li>
+            <li>
+              default values for Array and Object should be wrapped in a function to prevent sharing across all instances:
+              <div><pre class="bigger"><code class="language-javascript" data-caption="my-element.html">static get properties() {
+  return {
+    book: {
+      type: Object,
+      value: function() {
+        return { title: 'unknown', author: 'unknown' };
+      }
+    }
+  };
+}</code></pre></div>
+            <div class="demolink"><a href="demos/05_polymer/properties-2/index.html">demo</a></div>
+            </li>
+          </ul>  
+        </section>      
+        <section data-toc-title="">
+          <h2>Properties (3)</h2>
+          <ul>
+            <li>  
+              keep attribute in sync with <code>reflectToAttribute</code>:
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html">&lt;rogier-test some-property="hello"&gt;this is test 1&lt;/rogier-test&gt;</code></pre></div>
+              <div><pre class="bigger"><code class="language-javascript" data-caption="rogier-test.html">static get properties() {
+  return {
+    someProperty: {
+      type: String,
+      reflectToAttribute: true // reflect changes back to attribute
+    }
+  };
+}
+ready() {
+  super.ready();
+  this.someProperty = 'goodbye';
+}</code></pre></div>
+            <div class="demolink"><a href="demos/05_polymer/properties-2/index.html">demo</a></div>
+            </li>
+          </ul>  
+        </section>      
+        <section data-toc-title="">
+          <h2>Properties (4)</h2>
+          <ul>
+            <li>  
+              track changes with observers:
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html">&lt;rogier-test some-property="hello"&gt;this is test 1&lt;/rogier-test&gt;</code></pre></div>
+              <div><pre class="bigger"><code class="language-javascript" data-caption="rogier-test.html" style="height: 280px">class RogierTest extends Polymer.Element {
+
+  static get is() { return 'rogier-test' }
+
+  static get properties() {
+    return {
+      someProperty: {
+        type: String,
+        observer: '_prop1Changed'
+      }
+    };
+  }
+
+  _prop1Changed(newValue, oldValue) {
+    console.log('changed from ' + oldValue + ' to ' + newValue);
+  }
+
+  ready() {
+    super.ready();
+    this.someProperty =  'goodbye';
+  }
+
+}
+</code></pre></div>
+              <div class="demolink"><a href="demos/05_polymer/properties-3/index.html">demo</a></div>
+            </li>
+            <li class="arrow">
+              note: the leading underscore is just a Polymer convention for 'private' members
+            </li>
+          </ul>  
+        </section>      
+        <section data-toc-title="">
+          <h2>Properties (5)</h2>
+          <ul>
+            <li>  
+              more complex observers:
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html">
+&lt;rogier-test first-name="John" last-name="Doe"&gt;this is test 1&lt;/rogier-test&gt;</code></pre></div>
+              <div><pre class="bigger"><code class="language-javascript" data-caption="rogier-test.html" style="height: 280px">class RogierTest extends Polymer.Element {
+
+  static get is() { return 'rogier-test' }
+
+  static get properties() {
+    return {
+      firstName: {
+        type: String
+      },
+      lastName: {
+        type: String
+      }
+    };
+  }
+
+  static get observers() {
+    return [
+      '_nameChanged(firstName, lastName)'
+    ]
+  }
+
+  _nameChanged(firstName, lastName) {
+    console.log('name changed to ' + firstName + ' ' + lastName);
+  }
+
+  ready() {
+    super.ready();
+    this.lastName =  'Miles';
+  }
+
+}
+</code></pre></div>
+              <div class="demolink"><a href="demos/05_polymer/properties-4/index.html">demo</a></div>
+            </li>
+            <li class="arrow">
+              read more about <a href="https://www.polymer-project.org/2.0/docs/devguide/observers">observers here</a>
+            </li>
+          </ul>  
+        </section>      
+        <section data-toc-title="DOM access">
+          <h2>DOM access (1)</h2>
+          <ul>
+            <li>  
+              accessing host and template DOM, host:
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html">  ...
+  &lt;style&gt;
+    rogier-test h1 {
+      color: yellow; /* won't work; cannot access shadow DOM */
+    }
+    rogier-test h2 {
+      color: green; /* styling slotted elements */
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;rogier-test class="theme-dark"&gt;
+    &lt;h2&gt;this is some subtitle&lt;/h2&gt;
+    &lt;p&gt;this is some text&lt;/p&gt;
+  &lt;/rogier-test&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+          </ul>  
+        </section>      
+        <section data-toc-title="">
+          <h2>DOM access (2)</h2>
+          <ul>
+            <li>  
+              accessing host and template DOM, template:
+              <div><pre class="bigger"><code class="language-html" data-caption="rogier-test.html" style="height: 280px">&lt;template&gt;
+  &lt;style&gt;
+    /* styling the host, i.e. &lt;rogier-test&gt; */
+    :host {
+      display: inline-block;
+      padding: 10px 20px;
+    }
+    /* host theme */
+    :host(.theme-dark) {
+      background-color: navy;
+    }
+    /* styling slotted elements */
+    div &gt; ::slotted(p) {
+      font-style: italic;
+      font-family: Georgia;
+      color: white;
+    }
+    /* styling template DOM */
+    p {
+      color: red;
+    }
+    #div1 {
+      padding: 5px;
+    }
+  &lt;/style&gt;
+  &lt;div id="div1"&gt;
+    &lt;h1 id="header1"&gt;this is some title&lt;/h1&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+    &lt;p id="par1"&gt;hello&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+  class RogierTest extends Polymer.Element {
+
+    static get is() { return 'rogier-test' }
+
+    ready() {
+      super.ready();
+      // this.$ contains all template nodes by id
+      this.$.div1.style.backgroundColor = '#999';
+      this.$.par1.innerHTML = 'goodbye';
+      // or: this.shadowRoot.querySelector('#par1').innerHTML = 'bye';
+      // or: Polymer.dom(this.root).querySelector('par1').innerHTML = 'bye';
+    }
+
+  }
+  customElements.define(RogierTest.is, RogierTest);
+
+&lt;/script&gt;
+</code></pre></div>
+              <div class="demolink"><a href="demos/05_polymer/dom-access/index.html">demo</a></div>
+            </li>
+          </ul>  
+        </section>      
+        <section data-toc-title="Named slots">
+          <h2>Named slots (1)</h2>
+          <ul>
+            <li>  
+              named slots (only work on top-level children), host:
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html">&lt;rogier-test&gt;
+  &lt;div slot="summary"&gt;
+    &lt;p&gt;Veggies es bonus vobis&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div slot="title"&gt;
+    &lt;strong&gt;De Krook&lt;/strong&gt;, Gent
+  &lt;/div&gt;
+  &lt;div slot="text"&gt;
+    &lt;p&gt;Gumbo beet greens corn soko endive gumbo gourd...&lt;/p&gt;      
+    &lt;p&gt;Turnip greens yarrow ricebean rutabaga endive cau...&lt;/p&gt;      
+  &lt;/div&gt;
+&lt;/rogier-test&gt;
+</code></pre></div>
+            </li>
+          </ul>  
+        </section>      
+        <section data-toc-title="">
+          <h2>Named slots (2)</h2>
+          <ul>
+            <li>  
+              named slots (only work on top-level children), template:
+              <div><pre class="bigger"><code class="language-html" data-caption="rogier-test.html">&lt;template&gt;
+  &lt;style&gt;
+    h2 { font-weight: normal; }
+    h2 b { font-weight: bold; }
+    .short { font-size: smaller; }
+  &lt;/style&gt;
+  &lt;div id="wrapper"&gt;
+    &lt;h2&gt;&lt;slot name="title"&gt;default title&lt;/slot&gt;&lt;/h2&gt;
+    &lt;div class="short"&gt;&lt;slot name="summary"&gt;default summary&lt;/slot&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;slot name="text"&gt;default text&lt;/slot&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+  class RogierTest extends Polymer.Element {
+    static get is() { return 'rogier-test' }
+  }
+  customElements.define(RogierTest.is, RogierTest);
+&lt;/script&gt;
+&lt;div&gt;&lt;/div&gt;</code></pre></div>
+              <div class="demolink"><a href="demos/05_polymer/named-slots/index.html">demo</a></div>
+            </li>
+          </ul>  
+        </section>      
+        <section data-toc-title="Style modules">
+          <h2>Style modules (1)</h2>
+          <ul>
+            <li>  
+              support for external stylesheets has been dropped in Polymer 2, use style modules instead:
+              <div><pre class="bigger"><code class="language-html" data-caption="my-colors.html">&lt;link rel="import" href="../../common/polymer/polymer.html"&gt;
+
+&lt;dom-module id='my-colors'&gt;
+  &lt;template&gt;
+    &lt;style&gt;
+      p.red {
+        color: red;
+      }
+      p.green {
+        color: green;
+      }
+      p.blue {
+        color: blue;
+      }
+    &lt;/style&gt;
+  &lt;/template&gt;
+&lt;/dom-module&gt;</code></pre></div>
+            </li>
+          </ul>  
+        </section>      
+        <section data-toc-title="">
+          <h2>Style modules (2)</h2>
+          <ul>
+            <li>  
+              import and include the style module:
+              <div><pre class="bigger"><code class="language-html" data-caption="my-element.html" style="height: 280px;">&lt;link rel="import" href="../../common/polymer/polymer.html"&gt;
+&lt;!-- import style module --&gt;
+&lt;link rel="import" href="my-colors.html"&gt;
+&lt;dom-module id="rogier-test"&gt;
+
+  &lt;template&gt;
+    &lt;!-- include styles from my-colors --&gt;
+    &lt;style include="my-colors"&gt;&lt;/style&gt;
+    &lt;p class="red"&gt;I'm red&lt;/p&gt;
+    &lt;p class="green"&gt;I'm green&lt;/p&gt;
+    &lt;p class="blue"&gt;I'm blue&lt;/p&gt;
+  &lt;/template&gt;
+  &lt;script&gt;
+    class MyElement extends Polymer.Element {
+      static get is() { return 'my-element' }
+    }
+    customElements.define(MyElement.is, MyElement);
+  &lt;/script&gt;
+
+&lt;/dom-module&gt;
+</code></pre></div>
+              <div class="demolink"><a href="demos/05_polymer/style-modules/index.html">demo</a></div>
+            </li>
+          </ul>  
+        </section>      
+      </section>
+
+      <section>
+        <section>
+          <h1>Polymer</h1>
+          <h2>Creating apps</h2>
+          <ul class="chapterlist">
+            <!-- to be filled by Javascript -->
+          </ul>
+        </section>
+        <section data-toc-title="Main file">
+          <h2>Main file (1)</h2>
+          <ul>
+            <li>  
+              let's create a simple app showing some contacts; our main file:
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html" style="height: 280px;">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;title&gt;Testpage&lt;/title&gt;
+  &lt;meta charset="utf-8" ?&gt;
+  &lt;script src="../common/webcomponentsjs/webcomponents-lite.js"&gt;&lt;/script&gt;
+  &lt;link rel="import" href="elements/contacts-app.html"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;contacts-app contacts='[{"first":"Rogier","last":"van der Linde",
+  "email":"rogier.vanderlinde@odisee.be","avatar":"images/rogier.jpg"},
+  {"first":"Joris","last":"Maervoet","email":"joris.maervoet@odisee.be"},
+  {"first":"Kevin","last":"Picalausa","avatar":"images/kevin.jpg"}]'&gt;
+  &lt;/contacts-app&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div>
+            </li>
+            <li class="arrow">
+              contact details via JSON-encoded object property
+            </li>
+          </ul>  
+        </section>      
+        <section data-toc-title="">
+          <h2>Main file (2)</h2>
+          <ul>
+            <li>  
+              alternatively, with dymanic binding:
+              <div><pre class="bigger"><code class="language-html" data-caption="index.html">...
+&lt;contacts-app&gt;&lt;/contacts-app&gt;
+&lt;script&gt;
+  let contacts = [
+    { first: "Rogier", last: "van der Linde", email: "rogier.vanderlinde@odisee.be", avatar: "images/rogier.jpg" },
+    { first: "Joris", last: "Maervoet", email: "joris.maervoet@odisee.be" },
+    { first: "Kevin", last: "Picalausa", avatar: "images/kevin.jpg" }
+  ];
+  document.querySelector('contacts-app').setAttribute('contacts', JSON.stringify(contacts));
+&lt;/script&gt;
+...</code></pre></div>
+            </li>
+          </ul>  
+        </section>      
+        <section>
+          <h2>Contacts-app component</h2>
+          <ul>
+            <li>  
+              our <code>contacts-app</code> component uses a new component <code>contact-card</code> and a repeater:
+              <div><pre class="bigger"><code class="language-html" data-caption="contacts-app.html">&lt;link rel="import" href="../../common/polymer/polymer.html"&gt;
+&lt;link rel="import" href="contact-card.html"&gt;
+
+&lt;dom-module id="contacts-app"&gt;
+
+  &lt;template&gt;
+    &lt;style&gt;
+      .card {
+        width: 200px;
+        overflow: hidden;
+        border: 4px double;
+        float: left;
+        margin-right: 10px;
+      }
+      contact-picture, contact-info {
+        display: block;
+      }
+    &lt;/style&gt;
+    &lt;template is="dom-repeat" id="menu" items="{{contacts}}"&gt;
+      &lt;contact-card name="{{item.first}} {{item.last}}" email="{{item.email}}" avatar="{{item.avatar}}"&gt;&lt;/contact-picture&gt;
+    &lt;/template&gt;
+  &lt;/template&gt;
+
+  &lt;script&gt;
+    class ContactsApp extends Polymer.Element {
+
+      static get is() { return 'contacts-app' }
+
+      static get properties() {
+        return {
+          contacts: {
+            type: Array
+          }
+        };
+      }
+
+    }
+    customElements.define(ContactsApp.is, ContactsApp);
+
+  &lt;/script&gt;
+
+&lt;/dom-module&gt;</code></pre></div>
+            </li>
+          </ul>  
+        </section>      
+        <section>
+          <h2>Contact-card component</h2>
+          <ul>
+            <li>  
+              our <code>contact-card</code> component uses two new components <code>contact-picture</code> and <code>contact-info</code>:
+              <div><pre class="bigger"><code class="language-html" data-caption="contact-card.html">&lt;link rel="import" href="../../common/polymer/polymer.html"&gt;
+&lt;link rel="import" href="contact-picture.html"&gt;
+&lt;link rel="import" href="contact-info.html"&gt;
+
+&lt;dom-module id="contact-card"&gt;
+
+  &lt;template&gt;
+    &lt;style&gt;
+      .card {
+        width: 200px;
+        overflow: hidden;
+        float: left;
+        margin-right: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      }
+      contact-picture {
+        display: block;
+      }
+      contact-info {
+        display: block;
+      }
+    &lt;/style&gt;
+    &lt;div class="card"&gt;
+      &lt;contact-picture source="{{avatar}}"&gt;&lt;/contact-picture&gt;
+      &lt;contact-info name="{{name}}" email="{{email}}"&gt;&lt;/contact-info&gt;
+    &lt;/div&gt;
+  &lt;/template&gt;
+
+  &lt;script&gt;
+    class ContactCard extends Polymer.Element {
+
+      static get is() { return 'contact-card' }
+
+      static get properties() {
+        return {
+          name: {
+            type: String
+          },
+          email: {
+            type: String
+          },
+          avatar: {
+            type: String
+          }
+        };
+      }
+
+    }
+    customElements.define(ContactCard.is, ContactCard);
+
+  &lt;/script&gt;
+
+&lt;/dom-module&gt;</code></pre></div>
+            </li>
+          </ul>  
+        </section>      
+        <section>
+          <h2>Contact-picture component</h2>
+          <ul>
+            <li>  
+              our <code>contact-picture</code> component:
+              <div><pre class="bigger"><code class="language-html" data-caption="contact-picture.html">&lt;link rel="import" href="../../common/polymer/polymer.html"&gt;
+
+&lt;dom-module id="contact-picture"&gt;
+  &lt;template&gt;
+    &lt;style&gt;
+      img {
+        max-width: 100%;
+        box-sizing: border-box;
+        border: 2px solid #888;
+        border-radius: 20px;
+      }  
+      div {
+        padding: 10px;
+        background-color: #eee;
+      }
+    &lt;/style&gt;
+    &lt;div&gt;
+      &lt;template is="dom-if" if="{{source}}"&gt;
+        &lt;img src="{{source}}" alt="" /&gt;&lt;/div&gt;
+      &lt;/template&gt;
+      &lt;template is="dom-if" if="{{!source}}"&gt;
+        &lt;img src="images/default.jpg" alt="" /&gt;&lt;/div&gt;
+      &lt;/template&gt;
+  &lt;/template&gt;
+   
+  &lt;script&gt;
+    class ContactPicture extends Polymer.Element {
+
+      static get is() { return 'contact-picture' }
+
+      static get properties() {
+        return {
+          source: {
+            type: String,
+            value: ''
+          }  
+        }
+      }
+
+    }
+    customElements.define(ContactPicture.is, ContactPicture);
+  &lt;/script&gt;
+&lt;/dom-module&gt;</code></pre></div>
+            </li>
+          </ul>  
+        </section>      
+        <section>
+          <h2>Contact-info component</h2>
+          <ul>
+            <li>  
+              our <code>contact-info</code> component:
+              <div><pre class="bigger"><code class="language-html" data-caption="contact-info.html">&lt;link rel="import" href="../../common/polymer/polymer.html"&gt;
+
+&lt;dom-module id="contact-info"&gt;
+  &lt;template&gt;
+    &lt;style&gt;
+      .name {
+        color: green;
+        font-family: Arial;
+        text-align: center;
+      }
+      .email {
+        text-align: center;
+      }
+      .email a {
+        color: purple;
+        font-family: Arial;
+        text-decoration: none;
+        font-size: 10px;
+      }
+    &lt;/style&gt;
+    &lt;p class="name"&gt;{{name}}&lt;/p&gt;
+    &lt;p class="email"&gt;
+      &nbsp;
+      &lt;template is="dom-if" if="{{email}}"&gt;
+        &lt;a href="mailto:"&gt;{{email}}&lt;/a&gt;
+      &lt;/template&gt;
+    &lt;/p&gt;
+  &lt;/template&gt;
+   
+  &lt;script&gt;
+    class ContactInfo extends Polymer.Element {
+
+      static get is() { return 'contact-info' }
+
+      static get properties() {
+        return {
+          name: {
+            type: String
+          },  
+          email: {
+            type: String
+          }  
+        };
+      }
+
+    }
+    customElements.define(ContactInfo.is, ContactInfo);
+  &lt;/script&gt;
+&lt;/dom-module&gt;</code></pre></div>
+          <div class="demolink"><a href="demos/05_polymer/app/index.html">demo</a></div>
+            </li>
+          </ul>  
+        </section>      
+        <section>
+          <h2>Summary</h2>
+          <ul>
+            <li>  
+              We created a simple app using a combination of custom made components
+            </li>
+            <li>  
+              You may also use any other third party Polymer 2 compatible components to quickly build rich applications 
+            </li>
+            <li>  
+              Underlying principles are universal for all modern Javascript frameworks:
+              <ul>
+                <li>custom components</li>
+                <li>data binding</li>
+                <li>properties</li>
+                <li>encapsulation of styles and template</li>
+                <li>...</li>
+              </ul> 
+            </li>
+          </ul>  
+        </section>      
+      </section>
+
+			<section data-index-title="">
+				<section>
+					<h2>Questions?</h2>
+        </section>
+      </section>
+
+		</div>
+
+		<!-- ikdoeict.be Link -->
+		<a href="http://www.ikdoeict.be/" title="ikdoeict.be" id="ikdoeict">ikdoeict.be</a>
+
+		<!-- Index Link -->
+		<aside class="back">
+	      <nav>
+	        <p><a href="index.html">&larr; Back to index</a></p>
+	      </nav>
+		</aside>
+
+
+		<!-- bottomleft links -->
+		<ul id="extra">
+		</ul>
+
+	</div>
+
+	<script src="library/jquery.min.js"></script>
+	<script src="library/head.min.js"></script>
+	<script src="library/reveal/reveal.min.js"></script>
+  <script src="library/highlight/highlight.pack.js"></script>
+	<script src="library/prefixfree.js"></script>
+	<script src="library/css-snippets.js"></script>
+	<script src="library/css-edit.js"></script>
+	<script src="library/incrementable.js"></script>
+	<script src="library/main.js"></script>
+
+</body>
+</html>

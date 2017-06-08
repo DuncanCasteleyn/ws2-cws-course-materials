@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Events (2)</title>
+</head>
+<body>
+	<template id="testTemplate">
+		<div id="test">Click to say hi</div>
+		<script>
+// won't work			let elem = document.querySelector("#test");
+			let elem = document.currentScript.parentNode.querySelector("#test"); // little hack
+			elem.addEventListener('click', function(e) {
+				alert('Hi there');
+			});
+		</script>
+	</template>
+	<div id="testElement">Host text</div>
+	<script>
+		let shadow = document.querySelector('#testElement').createShadowRoot();
+		let template = document.querySelector('#testTemplate');
+		let clone = document.importNode(template.content, true);
+		shadow.appendChild(clone);
+	</script>
+</body>
+</html>

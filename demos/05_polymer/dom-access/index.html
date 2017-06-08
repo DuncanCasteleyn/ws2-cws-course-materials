@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Testpage</title>
+	<meta charset="utf-8" ?>
+	<script src="../common/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="elements/rogier-test.html">
+	<style>
+		rogier-test h1 {
+			color: yellow; /* won't work; cannot access shadow DOM */
+		}
+		rogier-test h2 {
+			color: green; /* styling slotted elements */
+		}
+	</style>
+</head>
+<body>
+	<rogier-test class="theme-dark">
+		<h2>this is some subtitle</h2>
+		<p>this is some text</p>
+	</rogier-test>
+</body>
+</html>

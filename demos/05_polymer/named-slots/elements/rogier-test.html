@@ -1,0 +1,31 @@
+<link rel="import" href="../../common/polymer/polymer.html">
+
+<dom-module id="rogier-test">
+
+  <template>
+    <style>
+      h2 { font-weight: normal; }
+      h2 b { font-weight: bold; }
+      .short { font-size: smaller; }
+    </style>
+    <div id="wrapper">
+      <h2><slot name="title">default title</slot></h2>
+      <div class="short"><slot name="summary">default summary</slot></div>
+      <div><slot name="text">default text</slot></div>
+    </div>
+  </template>
+  <script>
+    class RogierTest extends Polymer.Element {
+      static get is() { return 'rogier-test' }
+
+      ready() {
+        super.ready();
+        this.shadowRoot.querySelector('h2').addEventListener('click', function() {
+          console.log('ok');
+        });
+      }
+    }
+    customElements.define(RogierTest.is, RogierTest);
+  </script>
+
+</dom-module>

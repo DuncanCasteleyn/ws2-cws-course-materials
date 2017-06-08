@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Events (1)</title>
+</head>
+<body>
+	<template id="testTemplate">
+		<div id="test">Click to say hi</div>
+	</template>
+	<div id="testElement">Host text</div>
+	<script>
+		let shadow = document.querySelector('#testElement').createShadowRoot();
+		let template = document.querySelector('#testTemplate');
+		let clone = document.importNode(template.content, true);
+		clone.querySelector('#test').addEventListener('click', function(e) {
+			alert('Hi there');
+		});
+		shadow.appendChild(clone);
+	</script></body>
+</html>

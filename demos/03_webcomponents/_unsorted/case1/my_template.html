@@ -1,0 +1,10 @@
+<template id="myTemplate">
+	<p id="p1">some content</p>		
+	<script>
+		;(function() {
+			document.u
+			console.log(document.querySelectorAll('#p1').length > 0 ? 'p1 found' : 'p1 not found');	
+			console.log(document.currentScript.parentNode.querySelectorAll('#p1').length ? 'p1 found' : 'p1 not found');	
+		})();
+	</script>
+</template>

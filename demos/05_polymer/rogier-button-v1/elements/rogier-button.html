@@ -1,0 +1,50 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="rogier-button">
+
+	<template>
+		<style>
+			button {
+				border: 0;
+				cursor: pointer;
+				background-color: #eaeff2;
+				text-transform: uppercase;
+				border-radius: 4px;
+				box-shadow: inset 0 -3px #bbbfc2;
+				color: #4d4e53;
+				line-height: 35px;
+				height: 35px;
+				padding: 0 10px;
+				outline: none;
+			}
+			button:active {
+				box-shadow: inset 0 -1px #bbbfc2;
+				position: relative;
+				top: 1px;
+			}
+			img {
+				vertical-align: middle;
+				margin-right: 10px;
+			}
+		</style>
+		<button class="my-button">
+			<img src="{{icon}}" alt="">
+			<span><content></content></span>
+		</button>
+	</template>
+	<script>
+		Polymer({
+			is: 'rogier-button',
+			properties: {
+				icon: {
+					type: String,
+					value: 'images/v.png' // default value
+				}
+			},
+			attached: function() {
+				console.log('hurray! a new button is born using icon ' + this.icon);
+			}
+		});
+	</script>
+
+</dom-module>

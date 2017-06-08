@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Testpage</title>
+	<meta charset="utf-8" ?>
+	<script src="../common/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="elements/rogier-test.html">
+</head>
+<body>
+	<p>(inspect console)</p>
+	<div id="block1">
+		<rogier-test theme="dark">this is test 1</rogier-test>
+	</div>
+	<div id="block2"/>
+	<script>
+		var node = document.querySelector('rogier-test');
+		document.querySelector('#block1').removeChild(node);
+		document.querySelector('#block2').appendChild(node);
+	</script>
+</body>
+</html>
